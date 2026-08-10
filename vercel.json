@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    { "source": "/itera-option-1", "destination": "/index.html" },
+    { "source": "/itera-option-2", "destination": "/index.html" },
+    { "source": "/itera-option-3", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}

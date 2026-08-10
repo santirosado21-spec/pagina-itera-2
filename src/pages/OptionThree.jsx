@@ -1,0 +1,14 @@
+import { Evidence, FinalCTA, Footer, Nav, PageShell, Reveal, SignalNetwork, Simulation } from '../components/Site'
+import { links } from '../data/content'
+
+export default function OptionThree() { return <PageShell className="option option-three"><div className="signal-opening"><Nav minimal dark /><main id="main">
+  <section className="signal-hero"><div className="container"><Reveal className="signal-title"><p className="eyebrow">AI signal / judgment observed</p><h1>AI fluency<br/>is a living signal.</h1><div><p>Itera measures how people decide with AI in real workflows, then turns the gaps into practice.</p><a className="button" href={links.demo}>Request a demo</a></div></Reveal><SignalNetwork /></div></section>
+ </main></div><main>
+  <section className="signal-thesis section"><div className="container"><Reveal><p className="eyebrow">The missing signal</p><h2>Your team already uses AI. Nobody's checking their judgment.</h2></Reveal><div className="thesis-copy"><p className="lead">Prompting is the part everyone teaches. The harder part is choosing what to hand over in the first place, and judging what comes back. That's what we measure.</p></div><Evidence inline /></div></section>
+  <section id="product" className="signal-case section"><div className="container"><div className="case-copy"><span>01 / Observe</span><h2>A real artifact enters the simulation.</h2><p>Fifteen minutes, a role-based case, and a decision at the end.</p><a className="text-link" href={links.cases}>See the live cases →</a></div><Simulation /></div></section>
+  <section className="signal-decision section"><div className="container"><Reveal><span>02 / Decide</span><h2>People choose what AI gets to see—and what deserves pushback.</h2><p className="lead">Itera observes adoption, judgment, performance, and risk in the flow of work, not through a generic course.</p></Reveal></div></section>
+  <section id="how" className="signal-evidence section"><div className="container"><div><span>03 / Verify</span><h2>Every score points back to evidence.</h2></div><Simulation evaluation /></div></section>
+  <section id="managers" className="signal-manager section"><div className="container"><Reveal><p className="eyebrow">For managers</p><h2>See the signal change over time.</h2><p className="lead">Readiness per person and across the team, the risk events behind it, and the practice each gap unlocked. Download the report as a PDF.</p><ul><li>Individual and team readiness in real time.</li><li>Assign targeted practice and track completion.</li><li>Risk events with cited evidence, not a certificate for the wall.</li></ul></Reveal></div></section>
+  <section className="signal-source"><div className="container"><p>Organizations with high shadow-AI use averaged $670K more in breach costs.</p><cite>IBM, Cost of a Data Breach Report 2025.</cite></div></section>
+  <FinalCTA minimal />
+ </main><Footer /></PageShell> }
