@@ -73,11 +73,30 @@ export function HorizontalFlow({ graph = false }) {
   }, [graph])
   function choose(i, keyboard) { setActive(i); if (keyboard) requestAnimationFrame(() => detailHeading.current?.focus()) }
   return <>
-    <div className={`horizontal-flow ${graph ? 'directed-graph' : ''}`} role="list" aria-label="Measurement flow">
-      {flow.map(([label], i) => <div className="flow-pair" role="listitem" key={label}><button className={`${active === i ? 'active' : ''} ${i < lit ? 'lit' : ''}`} aria-pressed={active === i} aria-controls={detailId} aria-label={`Step ${i + 1}: ${label}`} onClick={() => choose(i, false)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(i, true) } }}><small>{String(i+1).padStart(2,'0')}</small><span>{label}</span></button>{i < flow.length - 1 && <i aria-hidden="true" />}</div>)}
+    <div className={`nine-stage-orbit ${graph ? 'directed-graph' : ''}`} role="group" aria-label="Nine-stage measurement process">
+      <svg className="nine-stage-rings" viewBox="0 0 800 800" aria-hidden="true">
+        <circle className="orbit-ring orbit-ring-outer" cx="400" cy="400" r="318" />
+        <circle className="orbit-ring orbit-ring-inner" cx="400" cy="400" r="250" />
+        <circle className="orbit-progress" cx="400" cy="400" r="318" pathLength="100" style={{ strokeDasharray: `${Math.max((active / (flow.length - 1)) * 100, .45)} 100` }} />
+      </svg>
+      <div className="orbit-core" aria-hidden="true">
+        <span>itera</span>
+        <strong>Operating loop</strong>
+        <small>{String(active + 1).padStart(2, '0')} / 09</small>
+      </div>
+      <ol className="orbit-stages">
+        {flow.map(([label], i) => {
+          const angle = (-90 + (i * 360 / flow.length)) * Math.PI / 180
+          const style = { left: `${50 + Math.cos(angle) * 39.75}%`, top: `${50 + Math.sin(angle) * 39.75}%`, '--orbit-delay': `${i * 55}ms` }
+          return <li style={style} key={label}>
+            <button className={`${active === i ? 'active' : ''} ${i < lit ? 'lit' : ''}`} aria-pressed={active === i} aria-controls={detailId} aria-label={`Step ${i + 1}: ${label}`} onClick={() => choose(i, false)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(i, true) } }}>
+              <small>{String(i + 1).padStart(2, '0')}</small><span>{label}</span>
+            </button>
+          </li>
+        })}
+      </ol>
     </div>
-    <ol className="mobile-flow">{flow.map(([label,heading,detail]) => <li key={label}><small>{String(flow.findIndex(x=>x[0]===label)+1).padStart(2,'0')}</small><h3>{label}</h3><strong>{heading}</strong><p>{detail}</p></li>)}</ol>
-    <div id={detailId} className="flow-detail" aria-live="polite"><small>{String(active+1).padStart(2,'0')} — {flow[active][0]}</small><h3 tabIndex="-1" ref={detailHeading}>{flow[active][1]}</h3><p>{flow[active][2]}</p></div>
+    <div id={detailId} className="flow-detail orbit-detail" aria-live="polite"><small>{String(active + 1).padStart(2, '0')} — {flow[active][0]}</small><h3 tabIndex="-1" ref={detailHeading}>{flow[active][1]}</h3><p>{flow[active][2]}</p><span className="orbit-output"><small>Output</small><strong>{flow[active][3]}</strong></span></div>
   </>
 }
 
@@ -95,6 +114,14 @@ export function AmbientBackground() {
 
 export function PageShell({ children, className = '' }) {
   const shellRef = useRef(null)
+  useEffect(() => {
+    if (!window.location.hash) return
+    const frame = requestAnimationFrame(() => {
+      const target = document.querySelector(window.location.hash)
+      if (target) target.scrollIntoView({ block: 'start' })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [])
   useEffect(() => {
     const shell = shellRef.current
     if (!shell) return
