@@ -47,8 +47,8 @@ export function Simulation({ evaluation = false }) {
   </div>
 }
 
-export function Dashboard({ enterprise = false }) {
-  return <div className={`dashboard ${enterprise ? 'dashboard-enterprise' : ''}`}>
+export function Dashboard({ enterprise = false, className = '' }) {
+  return <div className={`dashboard ${enterprise ? 'dashboard-enterprise' : ''} ${className}`}>
     <header><div><span>Team overview</span><strong>AI readiness</strong></div><small>Sample data</small></header>
     <div className="dashboard-metrics"><div><div className="readiness-value" role="group" aria-label="Readiness: 64 out of 100"><strong aria-hidden="true">64</strong><small aria-hidden="true">/100</small></div><span aria-hidden="true">Readiness</span></div><div><strong>6/8</strong><span>Assessed</span></div><div><strong>11</strong><span>Risk events</span></div></div>
     <div className="team-list"><strong>Team readiness <small>· anonymized team members</small></strong>{[['V',94],['A',89],['D',72]].map(([name,n]) => <div key={name}><span aria-label={`Anonymized team member ${name}`}>{name}</span><i><b style={{width:`${n}%`}} /></i><strong>{n}%</strong></div>)}</div>

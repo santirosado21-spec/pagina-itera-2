@@ -6,9 +6,9 @@ const collect = dir => readdirSync(dir).flatMap(name => {
   const path = join(dir, name)
   return statSync(path).isDirectory() ? collect(path) : [path]
 })
-const files = collect(join(root, 'src')).filter(x => /\.(jsx|js|css)$/.test(x))
+const files = collect(join(root, 'src')).filter(x => /\.(jsx|js|tsx|ts|css)$/.test(x))
 const source = files.map(x => readFileSync(x, 'utf8')).join('\n')
-const codeSource = files.filter(x => /\.(jsx|js)$/.test(x)).map(x => readFileSync(x, 'utf8')).join('\n')
+const codeSource = files.filter(x => /\.(jsx|js|tsx|ts)$/.test(x)).map(x => readFileSync(x, 'utf8')).join('\n')
 const main = readFileSync(join(root, 'src/main.jsx'), 'utf8')
 const optionThree = readFileSync(join(root, 'src/pages/OptionThree.jsx'), 'utf8')
 const optionOne = readFileSync(join(root, 'src/pages/OptionOne.jsx'), 'utf8')
@@ -16,8 +16,11 @@ const optionTwo = readFileSync(join(root, 'src/pages/OptionTwo.jsx'), 'utf8')
 const site = readFileSync(join(root, 'src/components/Site.jsx'), 'utf8')
 const css = readFileSync(join(root, 'src/styles/global.css'), 'utf8')
 const html = readFileSync(join(root, 'index.html'), 'utf8')
+const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
+const tailwindConfig = readFileSync(join(root, 'tailwind.config.js'), 'utf8')
 const failures = []
 const requireText = (label, pattern) => { if (!pattern.test(source)) failures.push(label) }
+if (!/corePlugins\s*:\s*\{[\s\S]*container\s*:\s*false/.test(tailwindConfig)) failures.push('Tailwind container utility must remain disabled to protect the legacy layout')
 
 for (const route of ['/itera-option-1','/itera-option-2','/itera-option-3','/itera-option-4']) {
   if (!main.includes(`'${route}'`)) failures.push(`missing route ${route}`)
@@ -29,7 +32,7 @@ for (const text of ['Sample data','57%','3×','$670K','44%','KPMG & University o
 for (const url of ['https://www.itera.la/demo','https://www.itera.la/case-demo','https://www.itera.la/auth/login','https://www.itera.la/auth/signup','mailto:hola@itera.la']) requireText(`missing approved destination ${url}`, new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))
 if (/#2E6BFF/i.test(source)) failures.push('obsolete brand blue found')
 if (/href=["']#["']/.test(source)) failures.push('dead # link found')
-if (/testimonial|trusted by|customer logo/i.test(source)) failures.push('unapproved social proof language found')
+if (/trusted by|customer logo/i.test(source)) failures.push('unapproved generic social proof language found')
 for (const value of ['88', '76', '84', '71']) {
   if (new RegExp(`['\"]?${value}['\"]?\\s*[,}%]`).test(codeSource)) failures.push(`unsupported evaluation value ${value} remains`)
 }
@@ -79,5 +82,40 @@ for (const phrase of ['makes good calls with AI.', 'catches what AI gets wrong.'
 }
 if (!/<AnimatedHeroTitle\s*\/>/.test(optionOne)) failures.push('AnimatedHeroTitle is not mounted in Option 1')
 if (!/animated-title-word:first-child\{display:block;opacity:1\}/.test(css)) failures.push('AnimatedHeroTitle lacks a deterministic reduced-motion state')
+
+// Product-led process and scroll-story integration contract.
+const howItWorksPath = join(root, 'src/components/ui/how-it-works.tsx')
+const containerScrollPath = join(root, 'src/components/ui/container-scroll-animation.tsx')
+const backgroundPathsPath = join(root, 'src/components/ui/background-paths.tsx')
+const testimonialPath = join(root, 'src/components/ui/testimonial.tsx')
+let howItWorks = ''
+let containerScroll = ''
+let backgroundPaths = ''
+let testimonial = ''
+try { howItWorks = readFileSync(howItWorksPath, 'utf8') } catch { failures.push('missing src/components/ui/how-it-works.tsx') }
+try { containerScroll = readFileSync(containerScrollPath, 'utf8') } catch { failures.push('missing src/components/ui/container-scroll-animation.tsx') }
+try { backgroundPaths = readFileSync(backgroundPathsPath, 'utf8') } catch { failures.push('missing src/components/ui/background-paths.tsx') }
+try { testimonial = readFileSync(testimonialPath, 'utf8') } catch { failures.push('missing src/components/ui/testimonial.tsx') }
+if (!/import HowItWorks from ['"]@\/components\/ui\/how-it-works['"]/.test(optionOne)) failures.push('Option 1 does not import HowItWorks through the @/components/ui alias')
+if (!/<HowItWorks\s+features=\{/.test(optionOne)) failures.push('Option 1 does not mount the nine-card HowItWorks graphic with Itera data')
+if (/<HorizontalFlow\s*\/>/.test(optionOne)) failures.push('Option 1 still mounts the circular HorizontalFlow')
+if (!/import \{ ContainerScroll \} from ['"]@\/components\/ui\/container-scroll-animation['"]/.test(optionOne)) failures.push('Option 1 does not import ContainerScroll through the @/components/ui alias')
+if (!/<ContainerScroll/.test(optionOne)) failures.push('Option 1 does not mount the 3D scroll animation')
+if (howItWorks && (howItWorks.match(/title:/g) || []).length < 9 && !/features/.test(howItWorks)) failures.push('HowItWorks is not prepared for all nine Itera stages')
+if (howItWorks && !/useReducedMotion/.test(howItWorks)) failures.push('HowItWorks animated path lacks a reduced-motion fallback')
+if (howItWorks && !/lg:block lg:h-\[var\(--process-height\)\]/.test(howItWorks)) failures.push('HowItWorks does not preserve the safe stacked layout through tablet widths')
+if (containerScroll && !/prefers-reduced-motion/.test(containerScroll)) failures.push('ContainerScroll lacks a deterministic reduced-motion fallback')
+if (containerScroll && !/overflow-y-auto[\s\S]*md:overflow-hidden/.test(containerScroll)) failures.push('ContainerScroll can clip the mobile dashboard instead of allowing access')
+if (!/import \{ BackgroundPaths \} from ['"]@\/components\/ui\/background-paths['"]/.test(optionOne)) failures.push('Option 1 does not import the animated BackgroundPaths CTA')
+if (!/<BackgroundPaths[\s\S]*title=/.test(optionOne)) failures.push('Product-led options do not end with the BackgroundPaths CTA')
+if (backgroundPaths && !/href=\{primaryHref\}/.test(backgroundPaths)) failures.push('BackgroundPaths CTA does not use a real link destination')
+if (backgroundPaths && !/useReducedMotion/.test(backgroundPaths)) failures.push('BackgroundPaths lacks a reduced-motion fallback')
+if (!/import Testimonials from ['"]@\/components\/ui\/testimonial['"]/.test(optionOne)) failures.push('Option 1 does not import the client testimonial section')
+if (!/<Testimonials\s*\/>/.test(optionOne)) failures.push('Product-led options do not mount the client testimonial section')
+for (const client of ['Ponte Advisory', 'Aurela Legal', 'Serena Health']) if (!testimonial.includes(client)) failures.push(`missing approved client ${client}`)
+if (testimonial && !/Pending client approval/.test(testimonial)) failures.push('draft testimonial copy is not clearly marked pending client approval')
+if (testimonial && /fonts\.googleapis\.com|Poppins/.test(testimonial)) failures.push('testimonial component breaks the shared Inter typography')
+for (const dependency of ['motion', 'framer-motion', '@radix-ui/react-slot', 'class-variance-authority']) if (!packageJson.dependencies?.[dependency]) failures.push(`missing runtime dependency ${dependency}`)
+for (const dependency of ['tailwindcss', 'typescript']) if (!packageJson.devDependencies?.[dependency]) failures.push(`missing development dependency ${dependency}`)
 if (failures.length) { console.error(`Verification failed:\n- ${failures.join('\n- ')}`); process.exit(1) }
 console.log(`Verification passed: ${files.length} source files checked; three distinct graphics/compositions, motion hooks and reduced-motion fallback, exact logo, required routes, local font, 9-stage flows, evidence, sample labels, and approved destinations present.`)
