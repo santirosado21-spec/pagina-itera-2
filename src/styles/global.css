@@ -55,3 +55,21 @@
 /* Legibility pass: retain the existing typeface while keeping secondary analytics text readable at card scale. */
 .product-screen-heading p{font-size:11px}.sample-label{color:#59667a;font-size:9px}.product-legend span{font-size:9.5px}.product-legend i,.donut-legend i{width:8px;height:8px}.activity-axis{color:#59667a;font-size:9.5px}.activity-metrics span{color:#46546a;font-size:11px}.metric-trend{min-width:80px;font-size:9.5px}.donut-center span{color:#46546a;font-size:10.5px}.donut-legend button>span{color:#2f3c52;font-size:10.5px}.donut-legend button>strong{font-size:11.5px}.score-header>span{font-size:12px}.score-strength,.score-indicator{font-size:10px}.score-gauge>div span{color:#526077;font-size:10px}.readiness-score-card>p{color:#3f4d63;font-size:12px}.score-signals span{color:#3f4d63;font-size:11px}
 @media(prefers-reduced-motion:reduce){.activity-chart polyline,.donut-segment,.score-gauge-value{animation:none!important}.donut-segment{transition:none!important}}
+
+/* Canonical liquid-glass control system for Product-Led options 1 and 4.
+   Geometry and typography continue to come from each control's existing rules. */
+.option-one :where(button,.button){position:relative;isolation:isolate;border-color:rgba(255,255,255,.72);border-radius:999px;background:radial-gradient(120% 100% at 16% 0%,rgba(255,255,255,.58),rgba(255,255,255,0) 52%),linear-gradient(145deg,rgba(255,255,255,.34) 0%,rgba(226,235,255,.18) 52%,rgba(152,184,255,.11) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,58,255,.1),0 1px 2px rgba(7,20,38,.12),0 10px 26px -18px rgba(7,20,38,.68);-webkit-backdrop-filter:blur(20px) saturate(175%);backdrop-filter:blur(20px) saturate(175%);transition:transform .2s ease,box-shadow .25s ease,background .25s ease,border-color .25s ease,color .25s ease}
+.option-one :where(button,.button):hover:not(:disabled){transform:translateY(-1px);border-color:rgba(255,255,255,.98);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,58,255,.1),0 2px 3px rgba(7,20,38,.14),0 15px 32px -18px rgba(0,58,255,.58)}
+.option-one :where(button,.button):active:not(:disabled){transform:translateY(0) scale(.98)}
+.option-one :where(.button,.workbench-tabs button[aria-selected=true],.flow-pair>button.active,.donut-legend button.active){border-color:rgba(205,219,255,.7);background:radial-gradient(120% 100% at 16% 0%,rgba(255,255,255,.34),rgba(255,255,255,0) 48%),linear-gradient(145deg,rgba(72,115,255,.62) 0%,rgba(0,58,255,.48) 48%,rgba(0,28,148,.42) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.58),inset 0 -1px 0 rgba(0,16,90,.28),0 2px 4px rgba(0,38,168,.2),0 13px 32px -16px rgba(0,58,255,.76);color:#fff}
+.option-one button,.option-one .button{border-radius:999px}
+.option-one .donut-legend button.active :where(span,strong){color:#fff}
+.option-one button:disabled{border-color:rgba(255,255,255,.55);background:linear-gradient(145deg,rgba(245,248,255,.58),rgba(230,235,246,.4));box-shadow:inset 0 1px 0 rgba(255,255,255,.78);color:#7a8495;opacity:.72}
+
+/* The opening background covers the complete viewport, including behind the glass navigation. */
+.option-one>.site-header{position:absolute!important;z-index:100!important;inset:0 0 auto;width:100%;background:rgba(255,255,255,.32);border-color:rgba(255,255,255,.52);-webkit-backdrop-filter:blur(20px) saturate(155%);backdrop-filter:blur(20px) saturate(155%)}
+.option-four .site-header{background:rgba(7,14,28,.26);border-color:rgba(255,255,255,.16);color:#fff}.option-four .menu-button{color:#fff}
+.option-one .lab-hero{display:flex;align-items:center;min-height:100svh}
+@supports(height:100dvh){.option-one .lab-hero{min-height:100dvh}}
+@media(max-width:767px){.option-one .lab-hero{min-height:100svh;padding:clamp(112px,15svh,140px) 0 clamp(64px,9svh,88px)}@supports(height:100dvh){.option-one .lab-hero{min-height:100dvh}}}
+@supports not ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.option-one :where(button,.button){background:rgba(242,246,255,.96)}.option-one :where(.button,.workbench-tabs button[aria-selected=true],.flow-pair>button.active,.donut-legend button.active){background:rgba(0,58,255,.96)}}
