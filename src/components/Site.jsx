@@ -154,19 +154,68 @@ export function ProductWorkbench() {
   </div>
 }
 
-const productCustomers = [
-  ['Paula Reed', 'Apr 22, 2026', 'Subscribed', 'OK', '$8,400'],
-  ['Tom Ingram', 'Dec 1, 2025', 'Subscribed', 'OK', '$2,900'],
-  ['Renee Grant', 'May 10, 2026', 'Privacy opt-out', 'OK', '$14,200'],
-  ['Brian Sloan', 'Mar 15, 2026', 'Subscribed', 'Bounces', '$3,200'],
-  ['Lily Foster', 'Feb 1, 2026', 'Unsubscribed', 'OK', '$5,100'],
+const activitySeries = [
+  { label: 'Verified decisions', color: '#003aff', points: '0,92 52,74 104,79 156,43 208,55 260,25 320,34', area: 'M0 92 L52 74 L104 79 L156 43 L208 55 L260 25 L320 34 L320 120 L0 120 Z' },
+  { label: 'Practice completed', color: '#7b9cff', points: '0,105 52,92 104,88 156,72 208,76 260,57 320,63', area: 'M0 105 L52 92 L104 88 L156 72 L208 76 L260 57 L320 63 L320 120 L0 120 Z' },
+  { label: 'Risk escalated', color: '#ef5b62', points: '0,112 52,106 104,109 156,98 208,101 260,91 320,95', area: 'M0 112 L52 106 L104 109 L156 98 L208 101 L260 91 L320 95 L320 120 L0 120 Z' },
 ]
+
+function ActivityDashboard() {
+  return <div className="activity-dashboard">
+    <div className="product-legend" aria-label="Activity chart legend">{activitySeries.map(item => <span key={item.label}><i style={{ backgroundColor: item.color }} />{item.label}</span>)}</div>
+    <svg className="activity-chart" viewBox="0 0 320 120" role="img" aria-label="Verified decisions and completed practice increased over the last seven sessions while escalated risk stayed low">
+      <g className="activity-grid"><path d="M0 20H320M0 53H320M0 86H320M0 119H320" /></g>
+      {activitySeries.map(item => <g key={item.label}><path d={item.area} fill={item.color} opacity=".08" /><polyline points={item.points} fill="none" stroke={item.color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></g>)}
+    </svg>
+    <div className="activity-axis" aria-hidden="true"><span>S1</span><span>S2</span><span>S3</span><span>S4</span><span>S5</span><span>S6</span><span>S7</span></div>
+    <div className="activity-metrics">
+      {[['Review time', '6 min', 'down', '18% faster'], ['Decision accuracy', '86%', 'up', '9% higher'], ['Risk escalation', '10%', 'down', '4% lower']].map(([label, value, direction, change]) => <div key={label}><span>{label}</span><strong>{value}</strong><em className={`metric-trend ${direction}`}>{direction === 'up' ? '↑' : '↓'} {change}</em></div>)}
+    </div>
+  </div>
+}
+
+const judgmentSignals = [
+  { label: 'Sound judgment', value: 48, color: '#003aff' },
+  { label: 'Needs verification', value: 32, color: '#7b9cff' },
+  { label: 'Risky handoff', value: 20, color: '#ef5b62' },
+]
+
+function JudgmentDonut() {
+  const [hovered, setHovered] = useState(null)
+  const [selected, setSelected] = useState(null)
+  const active = hovered ?? selected
+  const shown = active ?? { label: 'Decisions reviewed', value: 100, color: '#171d33' }
+  let offset = 0
+  return <div className="judgment-breakdown">
+    <div className="donut-wrap">
+      <svg className="judgment-donut" viewBox="0 0 200 200" role="img" aria-label="Decision signal breakdown: 48 percent sound judgment, 32 percent needs verification, and 20 percent risky handoff">
+        <circle className="donut-base" cx="100" cy="100" r="72" pathLength="100" />
+        {judgmentSignals.map(segment => { const dashOffset = -offset; offset += segment.value; return <circle key={segment.label} className="donut-segment" cx="100" cy="100" r="72" pathLength="100" stroke={segment.color} strokeDasharray={`${segment.value - 1.5} ${101.5 - segment.value}`} strokeDashoffset={dashOffset} tabIndex="0" onFocus={() => setHovered(segment)} onBlur={() => setHovered(null)} onMouseEnter={() => setHovered(segment)} onMouseLeave={() => setHovered(null)} /> })}
+      </svg>
+      <div className="donut-center" aria-live="polite"><span>{shown.label}</span><strong style={{ color: shown.color }}>{shown.value}{active ? '%' : ''}</strong></div>
+    </div>
+    <div className="donut-legend">{judgmentSignals.map(segment => <button type="button" key={segment.label} className={active?.label === segment.label ? 'active' : ''} aria-pressed={selected?.label === segment.label} onFocus={() => setHovered(segment)} onBlur={() => setHovered(null)} onMouseEnter={() => setHovered(segment)} onMouseLeave={() => setHovered(null)} onClick={() => setSelected(selected?.label === segment.label ? null : segment)}><span><i style={{ backgroundColor: segment.color }} />{segment.label}</span><strong>{segment.value}%</strong></button>)}</div>
+  </div>
+}
+
+function ReadinessScore() {
+  const score = 82
+  return <div className="readiness-score-card">
+    <div className="score-header"><span>AI judgment score</span><strong className="score-strength">Strong</strong></div>
+    <div className="score-gauge">
+      <svg viewBox="0 0 220 125" role="img" aria-label="AI judgment score: 82 out of 100, strong"><defs><linearGradient id="readiness-gradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#7b9cff"/><stop offset="1" stopColor="#003aff"/></linearGradient></defs><path className="score-gauge-base" d="M20 110 A90 90 0 0 1 200 110" pathLength="100"/><path className="score-gauge-value" d="M20 110 A90 90 0 0 1 200 110" pathLength="100" strokeDasharray={`${score} ${100-score}`}/></svg>
+      <div><strong>{score}</strong><span>out of 100</span></div>
+    </div>
+    <p>Consistently verifies model output and protects sensitive context before acting.</p>
+    <div className="score-signals">{[['Verification', '91', 'strong'], ['Delegation', '78', 'moderate'], ['Risk handling', '74', 'moderate']].map(([label, value, tone]) => <div key={label}><span>{label}</span><strong className={`score-indicator ${tone}`}>{value}</strong></div>)}</div>
+  </div>
+}
 
 function ProductScreenFrame({ step, category, title, children }) {
   return <article className="product-screen" aria-labelledby={`product-screen-${step}`}>
     <div className="product-screen-chrome" aria-hidden="true"><span /><span /><span /></div>
     <div className="product-screen-body">
-      <header className="product-screen-heading"><p>{category} · screen {step} of 7</p><h3 id={`product-screen-${step}`}>{title}</h3></header>
+      <header className="product-screen-heading"><p><span className="screen-step">{step}/3</span>{category}<span className="sample-label">Sample data</span></p><h3 id={`product-screen-${step}`}>{title}</h3></header>
       <div className="product-screen-viewport">{children}</div>
     </div>
   </article>
@@ -192,21 +241,12 @@ export function ProductScreens() {
     window.addEventListener('resize', syncPosition)
     return () => window.removeEventListener('resize', syncPosition)
   }, [])
-  return <section className="product-screens" aria-label="Sample Itera product interface">
-    <div className="product-screens-toolbar"><p>Three screens from an actual simulation</p><div className="product-screen-controls" aria-label="Product screen carousel controls"><button type="button" onClick={() => move(-1)} disabled={position.start} aria-label="Previous product screen">←</button><button type="button" onClick={() => move(1)} disabled={position.end} aria-label="Next product screen">→</button></div></div>
+  return <section className="product-screens" aria-label="Sample Itera product analytics">
+    <div className="product-screens-toolbar"><p>Three sample views of team judgment</p><div className="product-screen-controls" aria-label="Product screen carousel controls"><button type="button" onClick={() => move(-1)} disabled={position.start} aria-label="Previous product screen">←</button><button type="button" onClick={() => move(1)} disabled={position.end} aria-label="Next product screen">→</button></div></div>
     <div className="product-screens-track" ref={trackRef} onScroll={syncPosition}>
-      <ProductScreenFrame step="1" category="Context" title="This is how the customer list arrived">
-        <div className="customer-table-panel">
-          <strong>Sample of the customer list (of 480)</strong>
-          <table><thead><tr>{['Customer', 'Last purchase', 'Consent status', 'Deliverability', '12-month spend (USD)'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{productCustomers.map(row => <tr key={row[0]}>{row.map((value, i) => <td key={value} className={i === 2 ? 'consent-cell' : ''}>{value}</td>)}</tr>)}</tbody></table>
-        </div>
-      </ProductScreenFrame>
-      <ProductScreenFrame step="2" category="Context" title="How the April campaign did">
-        <div className="campaign-metrics">{[['Open rate', '22%'], ['30-day repeat purchase', '3.4%'], ['Complaints and unsubscribes', '1.8%']].map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong><i aria-hidden="true"><b style={{ width: value }} /></i></div>)}</div>
-      </ProductScreenFrame>
-      <ProductScreenFrame step="3" category="Data handling" title="Decide what you do with each customer">
-        <div className="decision-preview" aria-label="Non-interactive sample decisions"><div className="decision-head"><span>Customer</span><span>Decision</span></div>{productCustomers.map(([name], rowIndex) => <div className="decision-row" key={name}><strong>{name}</strong><div aria-hidden="true">{['Use', 'Anonymize', 'Exclude', 'Escalate'].map((choice, i) => <span className={i === rowIndex % 4 ? 'selected' : ''} key={choice}>{choice}</span>)}</div></div>)}</div>
-      </ProductScreenFrame>
+      <ProductScreenFrame step="1" category="Practice activity" title="See where judgment is improving"><ActivityDashboard /></ProductScreenFrame>
+      <ProductScreenFrame step="2" category="Decision signals" title="Understand what needs attention"><JudgmentDonut /></ProductScreenFrame>
+      <ProductScreenFrame step="3" category="Readiness score" title="Turn evidence into a clear score"><ReadinessScore /></ProductScreenFrame>
     </div>
   </section>
 }

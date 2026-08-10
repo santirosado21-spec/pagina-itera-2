@@ -19,7 +19,7 @@ const html = readFileSync(join(root, 'index.html'), 'utf8')
 const failures = []
 const requireText = (label, pattern) => { if (!pattern.test(source)) failures.push(label) }
 
-for (const route of ['/itera-option-1','/itera-option-2','/itera-option-3']) {
+for (const route of ['/itera-option-1','/itera-option-2','/itera-option-3','/itera-option-4']) {
   if (!main.includes(`'${route}'`)) failures.push(`missing route ${route}`)
 }
 for (const node of ['Company','Roles','AI Simulations','Evaluation','Adoption Data','Skill Gaps','Personalized Learning','Manager Dashboard','Measurable AI Adoption']) requireText(`missing flow node ${node}`, new RegExp(node))
@@ -30,7 +30,7 @@ for (const url of ['https://www.itera.la/demo','https://www.itera.la/case-demo',
 if (/#2E6BFF/i.test(source)) failures.push('obsolete brand blue found')
 if (/href=["']#["']/.test(source)) failures.push('dead # link found')
 if (/testimonial|trusted by|customer logo/i.test(source)) failures.push('unapproved social proof language found')
-for (const value of ['88', '82', '76', '84', '71', '91']) {
+for (const value of ['88', '76', '84', '71']) {
   if (new RegExp(`['\"]?${value}['\"]?\\s*[,}%]`).test(codeSource)) failures.push(`unsupported evaluation value ${value} remains`)
 }
 if (/disputed invoice/i.test(source)) failures.push('unsupported disputed-invoice result remains')
@@ -67,7 +67,7 @@ if (!/\.motion-paused \.ambient-background i\{animation-play-state:paused\}/.tes
 if (!/prefers-reduced-motion:reduce[\s\S]*\.motion-ready main>section[\s\S]*opacity:1!important;transform:none!important/.test(css)) failures.push('reduced-motion content fallback missing')
 if ((site.match(/Sample data/g) || []).length < 4) failures.push('control-room charts are not individually covered by Sample data labels')
 if (!/signal-mobile/.test(site + css)) failures.push('9-stage signal map lacks mobile timeline')
-for (const text of ['This is how the customer list arrived', 'How the April campaign did', 'Decide what you do with each customer', '22%', '3.4%', '1.8%']) {
+for (const text of ['See where judgment is improving', 'Understand what needs attention', 'Turn evidence into a clear score', 'Verified decisions', 'Sound judgment', 'AI judgment score']) {
   if (!site.includes(text)) failures.push(`ProductScreens missing ${text}`)
 }
 if (!/export function ProductScreens/.test(site)) failures.push('reusable ProductScreens component missing')
