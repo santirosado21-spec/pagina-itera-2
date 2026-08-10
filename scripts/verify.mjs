@@ -74,5 +74,10 @@ if (!/export function ProductScreens/.test(site)) failures.push('reusable Produc
 if (!/<ProductScreens\s*\/>/.test(optionOne)) failures.push('ProductScreens is not mounted in Option 1')
 if (/<ProductScreens\s*\/>/.test(optionTwo + optionThree)) failures.push('ProductScreens must only be mounted in Option 1')
 if (!/\.product-screens-track\{[^}]*scroll-snap-type:x mandatory/.test(css) || !/\.product-screen\{[^}]*scroll-snap-align:start/.test(css)) failures.push('ProductScreens lacks deterministic 3-card scroll-snap styling')
+for (const phrase of ['makes good calls with AI.', 'catches what AI gets wrong.', 'knows when to push back.', 'handles data responsibly.', 'is ready to work with AI.']) {
+  if (!source.includes(phrase)) failures.push(`AnimatedHeroTitle missing ${phrase}`)
+}
+if (!/<AnimatedHeroTitle\s*\/>/.test(optionOne)) failures.push('AnimatedHeroTitle is not mounted in Option 1')
+if (!/animated-title-word:first-child\{display:block;opacity:1\}/.test(css)) failures.push('AnimatedHeroTitle lacks a deterministic reduced-motion state')
 if (failures.length) { console.error(`Verification failed:\n- ${failures.join('\n- ')}`); process.exit(1) }
 console.log(`Verification passed: ${files.length} source files checked; three distinct graphics/compositions, motion hooks and reduced-motion fallback, exact logo, required routes, local font, 9-stage flows, evidence, sample labels, and approved destinations present.`)
