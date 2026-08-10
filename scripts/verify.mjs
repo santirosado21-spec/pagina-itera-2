@@ -88,14 +88,20 @@ const howItWorksPath = join(root, 'src/components/ui/how-it-works.tsx')
 const containerScrollPath = join(root, 'src/components/ui/container-scroll-animation.tsx')
 const backgroundPathsPath = join(root, 'src/components/ui/background-paths.tsx')
 const testimonialPath = join(root, 'src/components/ui/testimonial.tsx')
+const aetherRibbonPath = join(root, 'src/components/ui/aether-ribbon-mesh.tsx')
+const glassCardPath = join(root, 'src/components/ui/glass-card.tsx')
 let howItWorks = ''
 let containerScroll = ''
 let backgroundPaths = ''
 let testimonial = ''
+let aetherRibbon = ''
+let glassCard = ''
 try { howItWorks = readFileSync(howItWorksPath, 'utf8') } catch { failures.push('missing src/components/ui/how-it-works.tsx') }
 try { containerScroll = readFileSync(containerScrollPath, 'utf8') } catch { failures.push('missing src/components/ui/container-scroll-animation.tsx') }
 try { backgroundPaths = readFileSync(backgroundPathsPath, 'utf8') } catch { failures.push('missing src/components/ui/background-paths.tsx') }
 try { testimonial = readFileSync(testimonialPath, 'utf8') } catch { failures.push('missing src/components/ui/testimonial.tsx') }
+try { aetherRibbon = readFileSync(aetherRibbonPath, 'utf8') } catch { failures.push('missing src/components/ui/aether-ribbon-mesh.tsx') }
+try { glassCard = readFileSync(glassCardPath, 'utf8') } catch { failures.push('missing src/components/ui/glass-card.tsx') }
 if (!/import HowItWorks from ['"]@\/components\/ui\/how-it-works['"]/.test(optionOne)) failures.push('Option 1 does not import HowItWorks through the @/components/ui alias')
 if (!/<HowItWorks\s+features=\{/.test(optionOne)) failures.push('Option 1 does not mount the nine-card HowItWorks graphic with Itera data')
 if (/<HorizontalFlow\s*\/>/.test(optionOne)) failures.push('Option 1 still mounts the circular HorizontalFlow')
@@ -106,6 +112,8 @@ if (howItWorks && !/useReducedMotion/.test(howItWorks)) failures.push('HowItWork
 if (howItWorks && !/lg:block lg:h-\[var\(--process-height\)\]/.test(howItWorks)) failures.push('HowItWorks does not preserve the safe stacked layout through tablet widths')
 if (containerScroll && !/prefers-reduced-motion/.test(containerScroll)) failures.push('ContainerScroll lacks a deterministic reduced-motion fallback')
 if (containerScroll && !/overflow-y-auto[\s\S]*md:overflow-hidden/.test(containerScroll)) failures.push('ContainerScroll can clip the mobile dashboard instead of allowing access')
+if (containerScroll && !/pointer-events-none/.test(containerScroll)) failures.push('ContainerScroll dashboard does not let page scrolling pass through the graphic')
+if (containerScroll && !/onWheel=\{passWheelToPage\}/.test(containerScroll)) failures.push('ContainerScroll does not explicitly forward wheel scrolling to the page')
 if (!/import \{ BackgroundPaths \} from ['"]@\/components\/ui\/background-paths['"]/.test(optionOne)) failures.push('Option 1 does not import the animated BackgroundPaths CTA')
 if (!/<BackgroundPaths[\s\S]*title=/.test(optionOne)) failures.push('Product-led options do not end with the BackgroundPaths CTA')
 if (backgroundPaths && !/href=\{primaryHref\}/.test(backgroundPaths)) failures.push('BackgroundPaths CTA does not use a real link destination')
@@ -121,8 +129,24 @@ if (testimonial && /fonts\.googleapis\.com|Poppins/.test(testimonial)) failures.
 if (backgroundPaths && /Array\.from\(\{ length: (?:[2-9]\d|1\d\d+)/.test(backgroundPaths)) failures.push('final graphic renders too many animated paths')
 if (backgroundPaths && /repeat:\s*Number\.POSITIVE_INFINITY/.test(backgroundPaths)) failures.push('final graphic uses unbounded JS animation')
 if (backgroundPaths && !/bg-white/.test(backgroundPaths)) failures.push('final graphic background is not white')
+if (backgroundPaths && !/import AetherRibbonMesh from ['"]@\/components\/ui\/aether-ribbon-mesh['"]/.test(backgroundPaths)) failures.push('final CTA does not import the Aether ribbon graphic')
+if (backgroundPaths && !/<AetherRibbonMesh/.test(backgroundPaths)) failures.push('final CTA does not mount the Aether ribbon graphic')
+if (backgroundPaths && /function EvidenceGraphic/.test(backgroundPaths)) failures.push('old footer evidence graphic remains mounted')
+if (aetherRibbon && !/ResizeObserver/.test(aetherRibbon)) failures.push('Aether ribbon does not size itself to the footer section')
+if (aetherRibbon && !/prefers-reduced-motion/.test(aetherRibbon)) failures.push('Aether ribbon lacks a reduced-motion fallback')
+if (!/workbench-card[\s\S]{0,600}scan-field workbench-scan-overlay/.test(site)) failures.push('workbench scanner is not layered after the card')
+if (/scan-field[^>]*>\s*<i[^>]*\/>\s*<span/.test(site)) failures.push('workbench scanner still renders background point decorations')
+if (!/\.workbench-scan-overlay\{[^}]*z-index:4[^}]*pointer-events:none/.test(css)) failures.push('workbench scanner is not visibly layered over the card')
+if (!/import GlassCard from ['"]@\/components\/ui\/glass-card['"]/.test(optionOne)) failures.push('Product format does not import the supplied GlassCard through the UI alias')
+if (!/productFormatCards\.map/.test(optionOne) || !/<GlassCard/.test(optionOne)) failures.push('Product format does not render the four Itera information cards')
+if (/className="measurement section"[\s\S]{0,700}<Proof\s*\/>/.test(optionOne)) failures.push('Product format still renders the old plain proof list')
+for (const phrase of ['15 min', '6 dimensions', '~6 min', 'Continuous']) if (!optionOne.includes(phrase)) failures.push(`Product format card missing ${phrase}`)
+if (glassCard && !/rounded-\[24px\]/.test(glassCard)) failures.push('GlassCard does not use the restrained Itera card radius')
+if (glassCard && (/rounded-\[50px\]/.test(glassCard) || /30deg/.test(glassCard))) failures.push('GlassCard retains the over-designed reference geometry')
+if (glassCard && !/motion-reduce:transform-none/.test(glassCard)) failures.push('GlassCard lacks a reduced-motion interaction fallback')
 if (!/\.footer\{[^}]*background:#fff[^}]*color:var\(--ink\)/.test(css)) failures.push('footer is not a white, dark-copy surface')
 for (const dependency of ['motion', 'framer-motion', '@radix-ui/react-slot', 'class-variance-authority']) if (!packageJson.dependencies?.[dependency]) failures.push(`missing runtime dependency ${dependency}`)
+if (!packageJson.dependencies?.['lucide-react']) failures.push('missing runtime dependency lucide-react')
 for (const dependency of ['tailwindcss', 'typescript']) if (!packageJson.devDependencies?.[dependency]) failures.push(`missing development dependency ${dependency}`)
 if (failures.length) { console.error(`Verification failed:\n- ${failures.join('\n- ')}`); process.exit(1) }
 console.log(`Verification passed: ${files.length} source files checked; three distinct graphics/compositions, motion hooks and reduced-motion fallback, exact logo, required routes, local font, 9-stage flows, evidence, sample labels, and approved destinations present.`)

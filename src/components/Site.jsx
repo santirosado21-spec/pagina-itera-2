@@ -169,13 +169,13 @@ export function ProductWorkbench() {
       {workbenchStates.map(([label], i) => <button key={label} role="tab" aria-selected={active === i} onClick={() => setActive(i)}><i>{i + 1}</i>{label}</button>)}
     </div>
     <div className="workbench-stage">
-      <div className="scan-field" aria-hidden="true"><i className="scan-line" /><span /><span /><span /></div>
       <div className="artifact-stack" aria-hidden="true"><i /><i /><i /></div>
       <div className="workbench-card" role="tabpanel" tabIndex="0">
         <small>{workbenchStates[active][0]} · SAMPLE INTERFACE</small>
         <h3>{workbenchStates[active][1]}</h3><p>{workbenchStates[active][2]}</p>
         <div className="evidence-chip"><i /> Evidence {active === 2 ? 'ready to verify' : 'scan in progress'}</div>
       </div>
+      <div className="scan-field workbench-scan-overlay" aria-hidden="true"><i className="scan-line" /></div>
     </div>
     <div className="workbench-foot"><span>Role simulation</span><strong>{active + 1}/3</strong></div>
   </div>

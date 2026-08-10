@@ -29,10 +29,17 @@ export const ContainerScroll = ({ titleComponent, children, className = "" }: Co
   const scale = useTransform(scrollYProgress, [0.08, 0.58], isMobile ? [0.75, 0.94] : [1.05, 1]);
   const translate = useTransform(scrollYProgress, [0.08, 0.58], [0, isMobile ? -44 : -100]);
 
+  const passWheelToPage = (event: React.WheelEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+    window.scrollBy({ top: event.deltaY * unit, left: 0, behavior: "auto" });
+  };
+
   return (
     <div
       className={`relative flex h-[64rem] items-center justify-center p-2 md:h-[80rem] md:p-20 ${className}`}
       ref={containerRef}
+      onWheel={passWheelToPage}
     >
       <div className="relative w-full py-10 md:py-40" style={{ perspective: "1000px" }}>
         <Header translate={translate} titleComponent={titleComponent} reducedMotion={Boolean(shouldReduceMotion)} />
@@ -73,7 +80,7 @@ export const Card = ({ rotate, scale, reducedMotion, children }: CardProps) => (
       scale: reducedMotion ? 1 : scale,
       boxShadow: "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
     }}
-    className="mx-auto -mt-7 h-[44rem] w-full max-w-5xl rounded-[30px] border border-white/30 bg-white/10 p-2 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:-mt-12 md:h-[40rem] md:p-6"
+    className="pointer-events-none mx-auto -mt-7 h-[44rem] w-full max-w-5xl touch-pan-y rounded-[30px] border border-white/30 bg-white/10 p-2 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:-mt-12 md:h-[40rem] md:p-6"
   >
     <div className="h-full w-full overflow-x-hidden overflow-y-auto overscroll-contain rounded-2xl border border-white/55 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.96)] backdrop-blur-xl md:overflow-hidden md:p-4">
       {children}
