@@ -67,5 +67,12 @@ if (!/\.motion-paused \.ambient-background i\{animation-play-state:paused\}/.tes
 if (!/prefers-reduced-motion:reduce[\s\S]*\.motion-ready main>section[\s\S]*opacity:1!important;transform:none!important/.test(css)) failures.push('reduced-motion content fallback missing')
 if ((site.match(/Sample data/g) || []).length < 4) failures.push('control-room charts are not individually covered by Sample data labels')
 if (!/signal-mobile/.test(site + css)) failures.push('9-stage signal map lacks mobile timeline')
+for (const text of ['This is how the customer list arrived', 'How the April campaign did', 'Decide what you do with each customer', '22%', '3.4%', '1.8%']) {
+  if (!site.includes(text)) failures.push(`ProductScreens missing ${text}`)
+}
+if (!/export function ProductScreens/.test(site)) failures.push('reusable ProductScreens component missing')
+if (!/<ProductScreens\s*\/>/.test(optionOne)) failures.push('ProductScreens is not mounted in Option 1')
+if (/<ProductScreens\s*\/>/.test(optionTwo + optionThree)) failures.push('ProductScreens must only be mounted in Option 1')
+if (!/\.product-screens-track\{[^}]*scroll-snap-type:x mandatory/.test(css) || !/\.product-screen\{[^}]*scroll-snap-align:start/.test(css)) failures.push('ProductScreens lacks deterministic 3-card scroll-snap styling')
 if (failures.length) { console.error(`Verification failed:\n- ${failures.join('\n- ')}`); process.exit(1) }
 console.log(`Verification passed: ${files.length} source files checked; three distinct graphics/compositions, motion hooks and reduced-motion fallback, exact logo, required routes, local font, 9-stage flows, evidence, sample labels, and approved destinations present.`)

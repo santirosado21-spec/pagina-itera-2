@@ -154,6 +154,63 @@ export function ProductWorkbench() {
   </div>
 }
 
+const productCustomers = [
+  ['Paula Reed', 'Apr 22, 2026', 'Subscribed', 'OK', '$8,400'],
+  ['Tom Ingram', 'Dec 1, 2025', 'Subscribed', 'OK', '$2,900'],
+  ['Renee Grant', 'May 10, 2026', 'Privacy opt-out', 'OK', '$14,200'],
+  ['Brian Sloan', 'Mar 15, 2026', 'Subscribed', 'Bounces', '$3,200'],
+  ['Lily Foster', 'Feb 1, 2026', 'Unsubscribed', 'OK', '$5,100'],
+]
+
+function ProductScreenFrame({ step, category, title, children }) {
+  return <article className="product-screen" aria-labelledby={`product-screen-${step}`}>
+    <div className="product-screen-chrome" aria-hidden="true"><span /><span /><span /></div>
+    <div className="product-screen-body">
+      <header className="product-screen-heading"><p>{category} · screen {step} of 7</p><h3 id={`product-screen-${step}`}>{title}</h3></header>
+      <div className="product-screen-viewport">{children}</div>
+    </div>
+  </article>
+}
+
+export function ProductScreens() {
+  const trackRef = useRef(null)
+  const [position, setPosition] = useState({ start: true, end: false })
+  function syncPosition() {
+    const track = trackRef.current
+    if (!track) return
+    setPosition({ start: track.scrollLeft <= 2, end: track.scrollLeft + track.clientWidth >= track.scrollWidth - 2 })
+  }
+  function move(direction) {
+    const track = trackRef.current
+    const card = track?.querySelector('.product-screen')
+    if (!track || !card) return
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0
+    track.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap) })
+  }
+  useEffect(() => {
+    syncPosition()
+    window.addEventListener('resize', syncPosition)
+    return () => window.removeEventListener('resize', syncPosition)
+  }, [])
+  return <section className="product-screens" aria-label="Sample Itera product interface">
+    <div className="product-screens-toolbar"><p>Three screens from an actual simulation</p><div className="product-screen-controls" aria-label="Product screen carousel controls"><button type="button" onClick={() => move(-1)} disabled={position.start} aria-label="Previous product screen">←</button><button type="button" onClick={() => move(1)} disabled={position.end} aria-label="Next product screen">→</button></div></div>
+    <div className="product-screens-track" ref={trackRef} onScroll={syncPosition}>
+      <ProductScreenFrame step="1" category="Context" title="This is how the customer list arrived">
+        <div className="customer-table-panel">
+          <strong>Sample of the customer list (of 480)</strong>
+          <table><thead><tr>{['Customer', 'Last purchase', 'Consent status', 'Deliverability', '12-month spend (USD)'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{productCustomers.map(row => <tr key={row[0]}>{row.map((value, i) => <td key={value} className={i === 2 ? 'consent-cell' : ''}>{value}</td>)}</tr>)}</tbody></table>
+        </div>
+      </ProductScreenFrame>
+      <ProductScreenFrame step="2" category="Context" title="How the April campaign did">
+        <div className="campaign-metrics">{[['Open rate', '22%'], ['30-day repeat purchase', '3.4%'], ['Complaints and unsubscribes', '1.8%']].map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong><i aria-hidden="true"><b style={{ width: value }} /></i></div>)}</div>
+      </ProductScreenFrame>
+      <ProductScreenFrame step="3" category="Data handling" title="Decide what you do with each customer">
+        <div className="decision-preview" aria-label="Non-interactive sample decisions"><div className="decision-head"><span>Customer</span><span>Decision</span></div>{productCustomers.map(([name], rowIndex) => <div className="decision-row" key={name}><strong>{name}</strong><div aria-hidden="true">{['Use', 'Anonymize', 'Exclude', 'Escalate'].map((choice, i) => <span className={i === rowIndex % 4 ? 'selected' : ''} key={choice}>{choice}</span>)}</div></div>)}</div>
+      </ProductScreenFrame>
+    </div>
+  </section>
+}
+
 const chartSets = {
   Readiness: { line: 'M0 74 C35 72 45 56 78 60 S124 40 160 45 S208 18 260 22', value: '64/100' },
   Adoption: { line: 'M0 78 C38 68 56 70 86 51 S140 62 174 39 S220 45 260 26', value: '6/8' },
