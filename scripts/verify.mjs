@@ -148,10 +148,18 @@ if (/html\{[^}]*scroll-behavior:smooth/.test(css)) failures.push('global documen
 if (!/workbench-card[\s\S]{0,600}scan-field workbench-scan-overlay/.test(site)) failures.push('workbench scanner is not layered after the card')
 if (/scan-field[^>]*>\s*<i[^>]*\/>\s*<span/.test(site)) failures.push('workbench scanner still renders background point decorations')
 if (!/\.workbench-scan-overlay\{[^}]*z-index:4[^}]*pointer-events:none/.test(css)) failures.push('workbench scanner is not visibly layered over the card')
-if (!/import GlassCard from ['"]@\/components\/ui\/glass-card['"]/.test(optionOne)) failures.push('Product format does not import the supplied GlassCard through the UI alias')
-if (!/productFormatCards\.map/.test(optionOne) || !/<GlassCard/.test(optionOne)) failures.push('Product format does not render the four Itera information cards')
+if (!/import \{ AboutUs, PricingCalculator, ProductFormat \} from ['"]@\/components\/ui\/product-led-sections['"]/.test(optionOne)) failures.push('Option 1 does not import the requested product-led sections through the UI alias')
+if (!/productFormatCards/.test(optionOne) || !/<ProductFormat/.test(optionOne)) failures.push('Product format does not render the four Itera information cards around the centered logo')
 if (/className="measurement section"[\s\S]{0,700}<Proof\s*\/>/.test(optionOne)) failures.push('Product format still renders the old plain proof list')
-for (const phrase of ['15 min', '6 dimensions', '~6 min', 'Continuous']) if (!optionOne.includes(phrase)) failures.push(`Product format card missing ${phrase}`)
+for (const phrase of ['15 min', '6 dimensions', '6 min', 'Continuous']) if (!optionOne.includes(phrase)) failures.push(`Product format card missing ${phrase}`)
+if (optionOne.includes("metric: '~6 min'")) failures.push('Product format practice metric still includes a leading character before 6 min')
+for (const contract of [
+  ['Pricing calculator is missing', /<PricingCalculator\s*\/>/],
+  ['About Us section is missing', /<AboutUs\s*\/>/],
+  ['Centered Product Format composition is missing', /<ProductFormat\s+cards=\{productFormatCards\}/],
+]) if (!contract[1].test(optionOne)) failures.push(contract[0])
+for (const marker of ['price-slider', '149', 'Volume pricing', 'pablo.webp', 'Santiago Rosado', 'linkedin.com/in/pblcrmn']) requireText(`missing requested product-led content: ${marker}`, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'))
+if (!/linear-gradient\(135deg/.test(howItWorks)) failures.push('HowItWorks lacks the requested diagonal comment-card motion direction')
 if (glassCard && !/rounded-\[24px\]/.test(glassCard)) failures.push('GlassCard does not use the restrained Itera card radius')
 if (glassCard && (/rounded-\[50px\]/.test(glassCard) || /30deg/.test(glassCard))) failures.push('GlassCard retains the over-designed reference geometry')
 if (glassCard && !/motion-reduce:transform-none/.test(glassCard)) failures.push('GlassCard lacks a reduced-motion interaction fallback')

@@ -41,7 +41,7 @@ export function BackgroundPaths({
             <Button
               asChild
               variant="ghost"
-              className="h-auto rounded-full border border-[#b9c9ee] bg-[linear-gradient(145deg,#ffffff,#edf2ff)] px-8 py-5 text-[17px] font-semibold text-[#003aff] shadow-[inset_0_1px_0_rgba(255,255,255,1),0_16px_38px_-24px_rgba(0,58,255,0.72)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8facf0] hover:text-[#0026a8]"
+              className="itera-primary-cta h-auto rounded-full px-8 py-5 text-[17px] font-semibold transition-all duration-300 hover:-translate-y-0.5"
             >
               <a href={primaryHref}>
                 <span>{primaryLabel}</span>

@@ -11,6 +11,8 @@ interface CardProps {
   className?: string;
   rotate?: string;
   style?: React.CSSProperties;
+  index: number;
+  reducedMotion: boolean;
   colors?: {
     bg: string;
     text: string;
@@ -41,15 +43,22 @@ const Card = ({
   className = "",
   rotate = "",
   style,
+  index,
+  reducedMotion,
   colors = {
     bg: "bg-[#f4f7ff]",
     text: "text-[#003aff]",
     border: "border-[#dce5ff]",
   },
 }: CardProps) => (
-  <article
-    className={`relative z-10 w-full lg:w-[300px] transition-transform duration-300 hover:z-30 hover:scale-[1.025] ${rotate} ${className}`}
-    style={style}
+  <m.article
+    className={`relative z-10 w-full lg:w-[300px] hover:z-30 ${rotate} ${className}`}
+    style={{ ...style, backgroundImage: "linear-gradient(135deg, rgba(0,58,255,0.035), transparent 46%)" }}
+    initial={reducedMotion ? false : { opacity: 0, x: index % 2 === 0 ? -56 : 56, y: 56 }}
+    whileInView={{ opacity: 1, x: 0, y: 0 }}
+    viewport={{ once: true, amount: 0.22 }}
+    transition={{ duration: reducedMotion ? 0 : 0.62, delay: reducedMotion ? 0 : Math.min(index * 0.055, 0.32), ease: [0.22, 1, 0.36, 1] }}
+    whileHover={reducedMotion ? undefined : { y: -4, scale: 1.02 }}
   >
     <div className="rounded-[25px] border border-white/80 bg-white/55 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_18px_46px_-26px_rgba(0,58,255,0.48)] backdrop-blur-xl backdrop-saturate-150">
       <Pin className={`mx-auto mb-4 h-8 w-8 ${colors.text}`} />
@@ -69,7 +78,7 @@ const Card = ({
         )}
       </div>
     </div>
-  </article>
+  </m.article>
 );
 
 export interface Step {
@@ -179,6 +188,8 @@ export default function HowItWorks({ features, className = "", stepPositions }: 
                   rotate={position.rotate}
                   className={`${position.className || ""} lg:top-[var(--step-top)]`}
                   style={position.style}
+                  index={index}
+                  reducedMotion={reducedMotion}
                 />
               );
             })}

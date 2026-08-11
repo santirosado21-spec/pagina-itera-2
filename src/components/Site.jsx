@@ -3,7 +3,7 @@ import { dimensions, evidence, flow, links, proof } from '../data/content'
 
 export function Logo() { return <a className="logo" href="/" aria-label="Itera design options home"><img src="/a0ba166a-1b60-4d4e-bf9f-8b669276e87c.png" alt="" width="1371" height="659" /></a> }
 
-export function Nav({ enterprise = false, minimal = false, dark = false }) {
+export function Nav({ enterprise = false, minimal = false, dark = false, productLed = false }) {
   const [open, setOpen] = useState(false)
   const menuId = useId()
   return <header className={`site-header ${dark ? 'on-dark' : ''}`}>
@@ -14,8 +14,10 @@ export function Nav({ enterprise = false, minimal = false, dark = false }) {
         {!minimal && <a href="#product" onClick={() => setOpen(false)}>Product</a>}
         <a href="#how" onClick={() => setOpen(false)}>How it works</a>
         <a href="#managers" onClick={() => setOpen(false)}>For managers</a>
+        {productLed && <a href="#pricing" onClick={() => setOpen(false)}>Pricing</a>}
+        {productLed && <a href="#about" onClick={() => setOpen(false)}>About</a>}
         <a href={links.login}>Log in</a>
-        <a className="button nav-cta" href={links.demo}>{enterprise ? 'Schedule a briefing' : 'Request a demo'}</a>
+        <a className="button nav-cta itera-primary-cta" href={links.demo}>{enterprise ? 'Schedule a briefing' : 'Request a demo'}</a>
       </div>
     </nav>
   </header>
