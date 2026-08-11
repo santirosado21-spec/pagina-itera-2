@@ -3,8 +3,8 @@ import { useCallback, useEffect, useRef } from 'react'
 const CELL_SIZE = 55
 const INFLUENCE_RADIUS = 260
 const MAX_WARP = 24
-const DOT_SPACING = 28
 const LERP_SPEED = 0.08
+const FRAME_INTERVAL = 1000 / 30
 const LINE_BASE = { r: 255, g: 255, b: 255, a: 0.13 }
 
 const lerp = (a, b, t) => a + (b - a) * t
@@ -23,6 +23,8 @@ export default function KineticGrid({ className = '', children }) {
   const ripplesRef = useRef([])
   const sizeRef = useRef({ w: 0, h: 0, dpr: 1 })
   const rafRef = useRef(0)
+  const visibleRef = useRef(true)
+  const lastFrameRef = useRef(0)
 
   const warpedPoint = useCallback((gx, gy, col, row, mouse, ripples, cols, rows) => {
     const edgeMargin = 1.5
@@ -74,17 +76,7 @@ export default function KineticGrid({ className = '', children }) {
 
     context.setTransform(dpr, 0, 0, dpr, 0, 0)
     context.clearRect(0, 0, w, h)
-    context.fillStyle = '#161618'
-    context.fillRect(0, 0, w, h)
 
-    context.fillStyle = 'rgba(255,255,255,.05)'
-    for (let x = DOT_SPACING / 2; x < w; x += DOT_SPACING) {
-      for (let y = DOT_SPACING / 2; y < h; y += DOT_SPACING) {
-        context.beginPath()
-        context.arc(x, y, .7, 0, Math.PI * 2)
-        context.fill()
-      }
-    }
 
     for (let index = ripples.length - 1; index >= 0; index -= 1) {
       const ripple = ripples[index]
@@ -164,6 +156,12 @@ export default function KineticGrid({ className = '', children }) {
   }, [warpedPoint])
 
   const animate = useCallback((now) => {
+    if (!visibleRef.current || document.hidden) return
+    if (now - lastFrameRef.current < FRAME_INTERVAL) {
+      rafRef.current = requestAnimationFrame(animate)
+      return
+    }
+    lastFrameRef.current = now
     mouseRef.current.x = lerp(mouseRef.current.x, targetMouseRef.current.x, LERP_SPEED)
     mouseRef.current.y = lerp(mouseRef.current.y, targetMouseRef.current.y, LERP_SPEED)
     draw(now)
@@ -178,7 +176,7 @@ export default function KineticGrid({ className = '', children }) {
 
     const setSize = () => {
       const rect = root.getBoundingClientRect()
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25)
       canvas.width = Math.max(1, Math.round(rect.width * dpr))
       canvas.height = Math.max(1, Math.round(rect.height * dpr))
       sizeRef.current = { w: rect.width, h: rect.height, dpr }
@@ -199,7 +197,22 @@ export default function KineticGrid({ className = '', children }) {
     }
 
     const resizeObserver = new ResizeObserver(setSize)
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      const wasVisible = visibleRef.current
+      visibleRef.current = entry.isIntersecting
+      if (!entry.isIntersecting) cancelAnimationFrame(rafRef.current)
+      else if (!wasVisible && !reducedMotion) {
+        lastFrameRef.current = 0
+        rafRef.current = requestAnimationFrame(animate)
+      }
+    }, { rootMargin: '100px' })
+    const onVisibilityChange = () => {
+      cancelAnimationFrame(rafRef.current)
+      if (!document.hidden && visibleRef.current && !reducedMotion) rafRef.current = requestAnimationFrame(animate)
+    }
     resizeObserver.observe(root)
+    visibilityObserver.observe(root)
+    document.addEventListener('visibilitychange', onVisibilityChange)
     setSize()
     if (!reducedMotion) {
       window.addEventListener('pointermove', onMove, { passive: true })
@@ -209,6 +222,8 @@ export default function KineticGrid({ className = '', children }) {
 
     return () => {
       resizeObserver.disconnect()
+      visibilityObserver.disconnect()
+      document.removeEventListener('visibilitychange', onVisibilityChange)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('click', onClick)
       cancelAnimationFrame(rafRef.current)

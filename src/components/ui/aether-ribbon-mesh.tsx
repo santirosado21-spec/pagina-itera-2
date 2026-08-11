@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef } from 'react';
 
+const FRAME_INTERVAL = 1000 / 30;
+
 class Particle {
   x: number;
   y: number;
@@ -67,12 +69,13 @@ export default function AetherRibbonMesh({ className = '' }: AetherRibbonMeshPro
     let lastTime = performance.now();
     let time = 0;
     let isVisible = true;
+    let lastFrameTime = 0;
 
     const resize = () => {
       const bounds = root.getBoundingClientRect();
       width = Math.max(1, bounds.width);
       height = Math.max(1, bounds.height);
-      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
@@ -109,6 +112,11 @@ export default function AetherRibbonMesh({ className = '' }: AetherRibbonMeshPro
       (Math.sin(x * 0.0012 + t * 0.25 + offset) + Math.cos(x * 0.0028 - t * 0.4 + offset * 2)) / 2;
 
     const draw = (now: number) => {
+      if (!reducedMotion && now - lastFrameTime < FRAME_INTERVAL) {
+        if (isVisible && !document.hidden) animationFrameId = requestAnimationFrame(draw);
+        return;
+      }
+      lastFrameTime = now;
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
       time += dt * 0.85;
@@ -130,8 +138,8 @@ export default function AetherRibbonMesh({ className = '' }: AetherRibbonMeshPro
       if (clickRipple.radius < clickRipple.maxRadius) clickRipple.radius += clickRipple.speed;
 
       const layers = [
-        { ribbonCount: 16, step: 4, offsetMod: 0, freqScale: 0.0035, ampScale: 55, speedScale: 1.1, primary: true },
-        { ribbonCount: 10, step: 6, offsetMod: 1.2, freqScale: 0.0075, ampScale: 30, speedScale: 0.7, primary: false },
+        { ribbonCount: 10, step: 8, offsetMod: 0, freqScale: 0.0035, ampScale: 55, speedScale: 1.1, primary: true },
+        { ribbonCount: 6, step: 12, offsetMod: 1.2, freqScale: 0.0075, ampScale: 30, speedScale: 0.7, primary: false },
       ];
 
       layers.forEach((layer) => {

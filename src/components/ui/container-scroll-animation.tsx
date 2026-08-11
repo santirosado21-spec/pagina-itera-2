@@ -25,23 +25,16 @@ export const ContainerScroll = ({ titleComponent, children, className = "" }: Co
   }, []);
 
   // useReducedMotion mirrors prefers-reduced-motion and keeps the product frame deterministic.
-  const rotate = useTransform(scrollYProgress, [0.08, 0.58], [isMobile ? 10 : 20, 0]);
-  const scale = useTransform(scrollYProgress, [0.08, 0.58], isMobile ? [0.75, 0.94] : [1.05, 1]);
-  const translate = useTransform(scrollYProgress, [0.08, 0.58], [0, isMobile ? -44 : -100]);
-
-  const passWheelToPage = (event: React.WheelEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-    window.scrollBy({ top: event.deltaY * unit, left: 0, behavior: "auto" });
-  };
+  const rotate = useTransform(scrollYProgress, [0.12, 0.58], [isMobile ? 5 : 10, 0]);
+  const scale = useTransform(scrollYProgress, [0.12, 0.58], isMobile ? [0.86, 0.97] : [1.025, 1]);
+  const translate = useTransform(scrollYProgress, [0.12, 0.58], [0, isMobile ? -24 : -56]);
 
   return (
     <div
-      className={`relative flex h-[64rem] items-center justify-center p-2 md:h-[80rem] md:p-20 ${className}`}
+      className={`relative flex h-[52rem] touch-pan-y items-center justify-center p-2 md:h-[64rem] md:p-12 ${className}`}
       ref={containerRef}
-      onWheel={passWheelToPage}
     >
-      <div className="relative w-full py-10 md:py-40" style={{ perspective: "1000px" }}>
+      <div className="relative w-full py-8 md:py-24" style={{ perspective: "900px" }}>
         <Header translate={translate} titleComponent={titleComponent} reducedMotion={Boolean(shouldReduceMotion)} />
         <Card rotate={rotate} scale={scale} reducedMotion={Boolean(shouldReduceMotion)}>
           {children}
@@ -78,11 +71,11 @@ export const Card = ({ rotate, scale, reducedMotion, children }: CardProps) => (
     style={{
       rotateX: reducedMotion ? 0 : rotate,
       scale: reducedMotion ? 1 : scale,
-      boxShadow: "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
+      boxShadow: "0 16px 42px rgba(0, 0, 0, 0.22), 0 50px 90px rgba(0, 0, 0, 0.13)",
     }}
-    className="pointer-events-none mx-auto -mt-7 h-[44rem] w-full max-w-5xl touch-pan-y rounded-[30px] border border-white/30 bg-white/10 p-2 shadow-2xl backdrop-blur-2xl backdrop-saturate-150 md:-mt-12 md:h-[40rem] md:p-6"
+    className="pointer-events-none mx-auto -mt-7 h-[40rem] w-full max-w-5xl touch-pan-y rounded-[30px] border border-white/30 bg-white/20 p-2 md:-mt-12 md:h-[40rem] md:p-5"
   >
-    <div className="h-full w-full overflow-x-hidden overflow-y-auto overscroll-contain rounded-2xl border border-white/55 bg-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.96)] backdrop-blur-xl md:overflow-hidden md:p-4">
+    <div className="h-full w-full overflow-hidden rounded-2xl border border-white/55 bg-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.96)] md:p-4">
       {children}
     </div>
   </motion.div>
