@@ -27,6 +27,12 @@ if (!/--container:1200px;--px:32px/.test(css)) failures.push('desktop container 
 if (!/@media\(max-width:1023px\)\{[^}]*:root\{--px:24px\}/.test(css)) failures.push('tablet container must keep the AGENTS.md 24px gutter')
 if (!/@media\(max-width:767px\)\{[^}]*:root\{--px:20px\}/.test(css)) failures.push('mobile container must keep the AGENTS.md 20px gutter')
 if (!/\.container\{[^}]*calc\(var\(--container\) \+ 2\*var\(--px\)\)[^}]*padding-inline:var\(--px\)/.test(css)) failures.push('shared container no longer preserves the canonical left content line')
+if (!/\.editorial-head\{display:block;max-width:900px\}/.test(css)) failures.push('Product Lab editorial copy must share the canonical left content line')
+if (!/\.editorial-head h2\{margin-bottom:0\}\.editorial-head \.lead\{margin:24px 0 0\}/.test(css)) failures.push('Product Lab title-to-lead spacing must remain an exact non-collapsing 24px')
+if (!/\.problem-heading\{[^}]*margin-inline:auto;[^}]*text-align:center/.test(css)) failures.push('Why Itera editorial copy must use the intentional centered alignment')
+if (!/\.about-heading\{display:block;max-width:900px/.test(css)) failures.push('About Us editorial copy must share the canonical left content line')
+if (!/\.about-heading h2\{margin-bottom:0\}\.about-heading \.lead\{margin:24px 0 0\}/.test(css)) failures.push('About Us title-to-lead spacing must remain an exact non-collapsing 24px')
+if (/className="container narrow"/.test(optionOne)) failures.push('Product-Led editorial content still uses an arbitrary intermediate left edge')
 
 for (const route of ['/itera-option-1','/itera-option-2','/itera-option-3','/itera-option-4']) {
   if (!main.includes(`'${route}'`)) failures.push(`missing route ${route}`)
