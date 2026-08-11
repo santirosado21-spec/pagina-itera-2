@@ -22,6 +22,12 @@ const failures = []
 const requireText = (label, pattern) => { if (!pattern.test(source)) failures.push(label) }
 if (!/corePlugins\s*:\s*\{[\s\S]*container\s*:\s*false/.test(tailwindConfig)) failures.push('Tailwind container utility must remain disabled to protect the legacy layout')
 
+// AGENTS.md layout contract: one shared 1200px content line with exact responsive gutters.
+if (!/--container:1200px;--px:32px/.test(css)) failures.push('desktop container must keep the AGENTS.md 1200px max and 32px gutter')
+if (!/@media\(max-width:1023px\)\{[^}]*:root\{--px:24px\}/.test(css)) failures.push('tablet container must keep the AGENTS.md 24px gutter')
+if (!/@media\(max-width:767px\)\{[^}]*:root\{--px:20px\}/.test(css)) failures.push('mobile container must keep the AGENTS.md 20px gutter')
+if (!/\.container\{[^}]*calc\(var\(--container\) \+ 2\*var\(--px\)\)[^}]*padding-inline:var\(--px\)/.test(css)) failures.push('shared container no longer preserves the canonical left content line')
+
 for (const route of ['/itera-option-1','/itera-option-2','/itera-option-3','/itera-option-4']) {
   if (!main.includes(`'${route}'`)) failures.push(`missing route ${route}`)
 }

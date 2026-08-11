@@ -20,10 +20,10 @@ export function BackgroundPaths({
   const reducedMotion = Boolean(useReducedMotion());
 
   return (
-    <section className="motion-visible relative flex min-h-[680px] w-full items-center justify-center overflow-hidden bg-white px-5 py-24 text-[#171d33] md:min-h-[760px]" aria-labelledby="background-paths-title">
+    <section className="motion-visible relative flex min-h-[680px] w-full items-center justify-center overflow-hidden bg-white py-24 text-[#171d33] md:min-h-[760px]" aria-labelledby="background-paths-title">
       <div className="absolute inset-0" aria-hidden="true"><AetherRibbonMesh /></div>
 
-      <div className="container relative z-10 mx-auto px-4 text-center md:px-6">
+      <div className="container relative z-10 mx-auto text-center">
         <motion.div
           initial={reducedMotion ? false : { opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
