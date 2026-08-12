@@ -31,7 +31,7 @@ export const ContainerScroll = ({ titleComponent, children, className = "" }: Co
 
   return (
     <div
-      className={`relative flex h-[52rem] touch-pan-y items-center justify-center p-2 md:h-[64rem] md:p-12 ${className}`}
+      className={`container-scroll-stage relative flex h-[52rem] touch-pan-y items-center justify-center p-2 md:h-[64rem] md:p-12 ${className}`}
       ref={containerRef}
     >
       <div className="relative w-full py-8 md:py-24" style={{ perspective: "900px" }}>
@@ -73,7 +73,7 @@ export const Card = ({ rotate, scale, reducedMotion, children }: CardProps) => (
       scale: reducedMotion ? 1 : scale,
       boxShadow: "0 16px 42px rgba(0, 0, 0, 0.22), 0 50px 90px rgba(0, 0, 0, 0.13)",
     }}
-    className="pointer-events-none mx-auto -mt-7 h-[40rem] w-full max-w-5xl touch-pan-y rounded-[30px] border border-white/30 bg-white/20 p-2 md:-mt-12 md:h-[40rem] md:p-5"
+    className="container-scroll-card pointer-events-none mx-auto -mt-7 h-[40rem] w-full max-w-5xl touch-pan-y rounded-[30px] border border-white/30 bg-white/20 p-2 md:-mt-12 md:h-[40rem] md:p-5"
   >
     <div className="h-full w-full overflow-hidden rounded-2xl border border-white/55 bg-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.96)] md:p-4">
       {children}

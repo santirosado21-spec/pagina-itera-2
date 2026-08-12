@@ -7,6 +7,8 @@ interface ClientCard {
   logo: string;
   shortName: string;
   shortLogo: string;
+  sector: string;
+  impact: string;
   logoPosition?: string;
 }
 
@@ -16,18 +18,24 @@ const clients: ClientCard[] = [
     logo: "/client-logos/ponte-advisory.webp",
     shortName: "Ponte",
     shortLogo: "/client-logos/ponte.webp",
+    sector: "Professional services",
+    impact: "Our work with Ponte focuses on turning client-facing advisory work into role-based AI practice, with stronger verification, delegation, and judgment before work reaches a client.",
   },
   {
     company: "Aurea Legal",
     logo: "/client-logos/aurea-legal.webp",
     shortName: "Aurea",
     shortLogo: "/client-logos/aurea.webp",
+    sector: "Legal services",
+    impact: "Our work with Aurea focuses on translating legal workflows into realistic simulations, so the team can practice stronger review habits, clearer boundaries, and evidence-backed decisions.",
   },
   {
     company: "Serena Health",
     logo: "/client-logos/serena-health.webp",
     shortName: "Serena",
-    shortLogo: "/client-logos/serena.webp",
+    shortLogo: "/client-logos/serena-clean.webp",
+    sector: "Healthcare",
+    impact: "Our work with Serena focuses on AI-readiness practice for healthcare workflows: recognizing risky handoffs, protecting context, and verifying outputs before acting.",
     logoPosition: "center 48%",
   },
 ];
@@ -50,7 +58,8 @@ export default function Testimonials({ namesOnly = false }: { namesOnly?: boolea
               <article key={client.shortName} className="client-card client-card-names-only">
                 <div className="client-card-body">
                   <span className="client-logo-frame"><img src={client.shortLogo} alt={`${client.shortName} logo`} width="846" height="244" loading="lazy" decoding="async" /></span>
-                  <span className="client-card-heading"><span><strong>{client.shortName}</strong></span></span>
+                  <span className="client-card-heading"><span><strong>{client.shortName}</strong><small className="client-sector">{client.sector}</small></span></span>
+                  <p className="client-impact">{client.impact}</p>
                 </div>
               </article>
             );

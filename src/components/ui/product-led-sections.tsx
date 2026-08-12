@@ -24,14 +24,14 @@ export function ProductFormat({ cards, staticHub = false }: { cards: GlassCardPr
         <path d="M915 176 C780 176 770 310 660 340" />
         <path d="M915 544 C780 544 770 410 660 380" />
       </svg>
-      <div className="product-format-column">{left.map(card => <GlassCard key={card.title} {...card} />)}</div>
+      <div className="product-format-column">{left.map(card => <GlassCard key={card.title} className={staticHub ? "product-format-card-kinetic" : ""} {...card} />)}</div>
       <div className="product-format-hub">
         {!staticHub && <><span className="product-format-orbit" aria-hidden="true" /><span className="product-format-orbit orbit-two" aria-hidden="true" /></>}
         <div className="product-format-logo"><img src="/a0ba166a-1b60-4d4e-bf9f-8b669276e87c.png" alt="Itera" width="1371" height="659" /></div>
         <p>One continuous loop</p>
         <strong>Assess · practice · measure</strong>
       </div>
-      <div className="product-format-column">{right.map(card => <GlassCard key={card.title} {...card} />)}</div>
+      <div className="product-format-column">{right.map(card => <GlassCard key={card.title} className={staticHub ? "product-format-card-kinetic" : ""} {...card} />)}</div>
     </div>
   );
 }

@@ -14,9 +14,34 @@ test('Kinetic Field omits the unrequested Living Stack section', () => {
   assert.doesNotMatch(optionFour, /BuiltWithItera/);
 });
 
-test('Kinetic Field uses the requested compact manager copy and breathing room', () => {
-  assert.match(styles, /\.option-four \.manager-scroll-copy-kinetic\{[^}]*padding-block:clamp\(48px,7vw,80px\)/);
-  assert.match(styles, /\.option-four \.manager-scroll-copy-kinetic h2\{[^}]*font-size:clamp\(28px,3vw,40px\)/);
+test('Kinetic Field uses a smaller dashboard with bottom breathing room on a pricing-blue grid', () => {
+  assert.match(styles, /\.option-four \.manager-scroll-copy-kinetic\{[^}]*padding-block:clamp\(36px,5vw,56px\)/);
+  assert.match(styles, /\.option-four \.manager-scroll-copy-kinetic h2\{[^}]*font-size:clamp\(26px,2\.6vw,36px\)/);
+  assert.match(styles, /\.option-four \.lab-manager\{[^}]*background-color:#071426[^}]*background-image:linear-gradient/);
+  assert.match(styles, /\.option-four \.lab-manager>div\{[^}]*height:clamp\(820px,76vw,960px\)[^}]*padding-bottom:clamp\(96px,10vw,136px\)/);
+  assert.match(styles, /\.option-four \.lab-manager \.container-scroll-card\{[^}]*height:clamp\(460px,44vw,520px\)/);
+});
+
+test('Kinetic Field centers each product-format icon in its circle', () => {
+  const card = read('src/components/ui/glass-card.tsx');
+  assert.match(card, /product-format-icon-circle/);
+  assert.match(card, /product-format-icon[^\n]*m-auto/);
+  assert.match(read('src/components/ui/product-led-sections.tsx'), /product-format-card-kinetic/);
+  assert.match(styles, /\.option-four \.product-format-card-kinetic \.product-format-icon-circle/);
+});
+
+test('Kinetic Field client cards explain each sector and how Itera helped', () => {
+  for (const copy of [
+    'Professional services',
+    'Legal services',
+    'Healthcare',
+    'client-facing advisory work',
+    'legal workflows',
+    'healthcare workflows',
+  ]) assert.match(clients, new RegExp(copy, 'i'));
+  assert.match(clients, /client-sector/);
+  assert.match(clients, /client-impact/);
+  assert.match(clients, /serena-clean\.webp/);
 });
 
 test('Kinetic Field calculator uses the requested tiers without the blue Pricing calculator label', () => {
@@ -71,7 +96,7 @@ test('Built with Itera uses five real local logos and centered liquid glass', ()
 });
 
 test('Kinetic Field organization mode uses name-only crops', () => {
-  for (const logo of ['ponte.webp', 'aurea.webp', 'serena.webp']) {
+  for (const logo of ['ponte.webp', 'aurea.webp', 'serena-clean.webp']) {
     assert.match(clients, new RegExp(`/client-logos/${logo}`));
   }
   assert.match(optionOne, /namesOnly=\{kinetic\}/);

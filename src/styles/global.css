@@ -169,12 +169,19 @@
 @media(prefers-reduced-motion:reduce){.built-with-itera__orbit,.built-with-itera__provider{animation:none!important;transition:none!important}}
 
 /* Kinetic Field refinement — intentionally isolated from Option 1. */
-.option-four .manager-scroll-copy-kinetic{max-width:780px;margin-inline:auto;padding-block:clamp(48px,7vw,80px);padding-inline:clamp(20px,4vw,48px)}
-.option-four .manager-scroll-copy-kinetic h2{max-width:720px;font-size:clamp(28px,3vw,40px);line-height:1.14}
+.option-four .lab-manager{height:auto;background-color:#071426;background-image:linear-gradient(rgba(134,169,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(134,169,255,.09) 1px,transparent 1px);background-size:40px 40px}
+.option-four .lab-manager>div{height:clamp(820px,76vw,960px);padding-bottom:clamp(96px,10vw,136px)}
+.option-four .manager-scroll-copy-kinetic{max-width:760px;margin-inline:auto;padding-block:clamp(36px,5vw,56px);padding-inline:clamp(20px,4vw,48px)}
+.option-four .manager-scroll-copy-kinetic h2{max-width:680px;font-size:clamp(26px,2.6vw,36px);line-height:1.14}
 .option-four .manager-scroll-copy-kinetic .lead{max-width:600px;font-size:clamp(15px,1.15vw,18px);line-height:1.58}
+.option-four .lab-manager .container-scroll-card{height:clamp(460px,44vw,520px);max-width:920px}
 .option-four .pricing-copy>.eyebrow{color:#fff}
 .option-four .product-format-hub{min-height:260px}
 .option-four .product-format-logo{width:188px;height:188px;box-shadow:0 34px 76px -42px rgba(0,58,255,.7),inset 0 1px 0 #fff}
+.option-four .product-format-card-kinetic .product-format-icon-orbit{right:-24px;top:-24px;display:grid;place-items:center}
+.option-four .product-format-card-kinetic .product-format-icon-ring-outer{inset:0}
+.option-four .product-format-card-kinetic .product-format-icon-ring-inner{position:relative;inset:auto}
+.option-four .product-format-card-kinetic .product-format-icon-circle{position:absolute;inset:50% auto auto 50%;transform:translate3d(-50%,-50%,24px)}
 
 .option-four .price-slider-wrap{margin:38px 0 30px}
 .option-four .price-slider-wrap input[type="range"]{display:block;width:100%;height:34px;margin:0;cursor:grab;appearance:none;-webkit-appearance:none;background:transparent}
@@ -196,7 +203,9 @@
 .option-four .client-card-body{padding:8px}
 .option-four .client-card-names-only .client-logo-frame{display:grid;place-items:center;height:220px;padding:40px;background:rgba(238,243,255,.82)}
 .option-four .client-card-names-only .client-logo-frame img{width:100%;height:auto;max-height:86px;object-fit:contain;transform:none!important}
-.option-four .client-card-names-only .client-card-heading{padding:20px 16px}.option-four .client-card-names-only .client-card-heading strong{font-size:20px}
+.option-four .client-card-names-only .client-card-heading{padding:20px 16px 12px}.option-four .client-card-names-only .client-card-heading strong{font-size:20px}
+.option-four .client-card-names-only .client-sector{color:#003aff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.option-four .client-card-names-only .client-impact{min-height:152px;margin:0;padding:0 16px 24px;color:#46546a;font-size:15px;line-height:1.55}
 .option-four .founder-photo{background:#0865c7}
 .option-four .founder-card-pablo .founder-photo img{transform:scale(1.025)}
 .background-proposal-switcher{position:fixed;z-index:220;right:18px;bottom:18px;display:flex;align-items:center;gap:6px;padding:7px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:rgba(248,250,255,.82);box-shadow:0 16px 40px -24px rgba(7,20,38,.65);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
@@ -228,8 +237,9 @@
 .option-four-bg-midnight .problem .evidence-item cite{color:#aebdd1}
 
 @media(max-width:767px){
-  .option-four .manager-scroll-copy-kinetic{padding-block:48px;padding-inline:10px}.option-four .manager-scroll-copy-kinetic h2{font-size:clamp(28px,8.5vw,34px)}
+  .option-four .lab-manager>div{height:820px;padding-bottom:96px}.option-four .manager-scroll-copy-kinetic{padding-block:36px;padding-inline:10px}.option-four .manager-scroll-copy-kinetic h2{font-size:clamp(26px,8vw,32px)}
   .option-four .pricing-tier-list{grid-template-columns:repeat(2,minmax(0,1fr))}
   .option-four .client-card-names-only .client-logo-frame{height:190px;padding:32px}
+  .option-four .client-card-names-only .client-impact{min-height:0}
   .background-proposal-switcher{right:10px;bottom:10px;left:10px;justify-content:center;overflow-x:auto}.background-proposal-switcher span{display:none}.background-proposal-switcher a{white-space:nowrap;padding-inline:10px}
 }
