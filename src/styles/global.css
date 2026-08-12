@@ -180,10 +180,12 @@
 .option-four .pricing-copy>.eyebrow{color:#fff}
 .option-four .product-format-hub{min-height:260px}
 .option-four .product-format-logo{width:188px;height:188px;box-shadow:0 34px 76px -42px rgba(0,58,255,.7),inset 0 1px 0 #fff}
-.option-four .product-format-card-kinetic .product-format-icon-orbit{right:-24px;top:-24px;display:grid;place-items:center}
-.option-four .product-format-card-kinetic .product-format-icon-ring-outer{inset:0}
-.option-four .product-format-card-kinetic .product-format-icon-ring-inner{position:relative;inset:auto}
-.option-four .product-format-card-kinetic .product-format-icon-circle{position:absolute;inset:50% auto auto 50%;transform:translate3d(-50%,-50%,24px)}
+.option-four .product-format-card-kinetic .product-format-icon-orbit{position:absolute!important;top:24px;right:24px;width:48px;height:48px;transform:none!important}
+.option-four .product-format-column:last-child .product-format-card-kinetic .product-format-icon-orbit{right:auto;left:24px}
+.option-four .product-format-card-kinetic .product-format-icon-ring-outer,
+.option-four .product-format-card-kinetic .product-format-icon-ring-inner{display:none}
+.option-four .product-format-card-kinetic .product-format-icon-circle{position:absolute;inset:0;display:grid;width:48px;height:48px;place-items:center;transform:none!important;transition:none}
+.option-four .product-format-card-kinetic .product-format-icon{margin:auto}
 
 .option-four .price-slider-wrap{margin:38px 0 30px}
 .option-four .price-slider-wrap input[type="range"]{display:block;width:100%;height:34px;margin:0;cursor:grab;appearance:none;-webkit-appearance:none;background:transparent}
@@ -241,7 +243,7 @@
 @media(max-width:767px){
   .background-proposal-switcher{display:none}
   .option-four .lab-hero{padding-top:84px;padding-bottom:72px}.option-four .lab-hero-grid{gap:36px}.option-four .lab-hero .cta-row{margin-top:28px}.option-four .lab-hero .text-link{min-height:44px}.option-four .workbench-card{padding:28px}
-  .option-four .product-format-card-kinetic>div{transform:none!important;transition:none!important}.option-four .product-format-card-kinetic .product-format-icon-orbit{right:-24px;top:-24px;transform:none!important}.option-four .product-format-card-kinetic .product-format-icon-ring-outer{transform:translate3d(0,0,0)!important}.option-four .product-format-card-kinetic .product-format-icon-ring-inner{transform:translate3d(0,0,0)!important}.option-four .product-format-card-kinetic .product-format-icon-circle{transform:translate3d(-50%,-50%,0)!important;transition:none!important}
+  .option-four .product-format-card-kinetic>div{transform:none!important;transition:none!important}.option-four .product-format-card-kinetic .product-format-icon-orbit{top:24px;right:24px;transform:none!important}.option-four .product-format-column:last-child .product-format-card-kinetic .product-format-icon-orbit{right:auto;left:24px}.option-four .product-format-card-kinetic .product-format-icon-circle{transform:none!important;transition:none!important}
   .option-four .lab-manager>div{height:820px;padding-bottom:72px}.option-four .manager-scroll-copy-kinetic{padding-block:28px;padding-inline:0}.option-four .manager-scroll-copy-kinetic h2{font-size:clamp(26px,8vw,32px)}
   .option-four .lab-manager .container-scroll-card{height:430px}
   .option-four .dashboard{padding:20px}.option-four .dashboard>header{align-items:flex-start;padding-bottom:16px}.option-four .dashboard>header span,.option-four .dashboard>header small{font-size:11px}
