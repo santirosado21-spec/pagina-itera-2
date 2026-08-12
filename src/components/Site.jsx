@@ -236,11 +236,28 @@ function ReadinessScore() {
   </div>
 }
 
+function CaseDecision() {
+  return <div className="case-decision-demo liquid-glass-panel">
+    <div className="case-decision-artifact"><small>Customer escalation · Draft reply</small><strong>“The service was restored in under two hours.”</strong><p>Source notes show a four-hour interruption. Decide what the model can keep, what must change, and what needs verification.</p></div>
+    <div className="case-decision-actions" role="list" aria-label="Sample case decision choices"><span role="listitem">Keep with evidence</span><span role="listitem" className="selected">Verify before sending · Sample selected state</span><span role="listitem">Escalate to manager</span></div>
+    <footer><span>Evidence found · 2 conflicts</span><strong>Decision recorded</strong></footer>
+  </div>
+}
+
+function TargetedPractice() {
+  return <div className="targeted-practice-demo liquid-glass-panel">
+    <header><span>Assigned from observed evidence</span><strong>6 min</strong></header>
+    <div className="practice-focus"><small>Focus area</small><h4>Verification before action</h4><p>Practice the exact judgment gap surfaced in the last case, then reassess it in the same workflow.</p></div>
+    <div className="practice-plan"><div><span>01</span><strong>Inspect the claim</strong></div><div><span>02</span><strong>Check the source</strong></div><div><span>03</span><strong>Choose the safe action</strong></div></div>
+    <footer><span>Linked signal · Verification 64</span><strong>Ready to start →</strong></footer>
+  </div>
+}
+
 function ProductScreenFrame({ step, category, title, children }) {
   return <article className="product-screen" aria-labelledby={`product-screen-${step}`}>
     <div className="product-screen-chrome" aria-hidden="true"><span /><span /><span /></div>
     <div className="product-screen-body">
-      <header className="product-screen-heading"><p><span className="screen-step">{step}/3</span>{category}<span className="sample-label">Sample data</span></p><h3 id={`product-screen-${step}`}>{title}</h3></header>
+      <header className="product-screen-heading"><p><span className="screen-step">{step}/5</span>{category}<span className="sample-label">Sample data</span></p><h3 id={`product-screen-${step}`}>{title}</h3></header>
       <div className="product-screen-viewport">{children}</div>
     </div>
   </article>
@@ -262,16 +279,25 @@ export function ProductScreens() {
     track.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap) })
   }
   useEffect(() => {
-    syncPosition()
+    const track = trackRef.current
+    const frame = requestAnimationFrame(syncPosition)
+    const resizeObserver = new ResizeObserver(syncPosition)
+    if (track) resizeObserver.observe(track)
     window.addEventListener('resize', syncPosition)
-    return () => window.removeEventListener('resize', syncPosition)
+    return () => {
+      cancelAnimationFrame(frame)
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', syncPosition)
+    }
   }, [])
   return <section className="product-screens" aria-label="Sample Itera product analytics">
-    <div className="product-screens-toolbar"><p>Three sample views of team judgment</p><div className="product-screen-controls" aria-label="Product screen carousel controls"><button type="button" onClick={() => move(-1)} disabled={position.start} aria-label="Previous product screen">←</button><button type="button" onClick={() => move(1)} disabled={position.end} aria-label="Next product screen">→</button></div></div>
+    <div className="product-screens-toolbar"><p>Five sample views of team judgment</p><div className="product-screen-controls" aria-label="Product screen carousel controls"><button type="button" onClick={() => move(-1)} disabled={position.start} aria-label="Previous product screen">←</button><button type="button" onClick={() => move(1)} disabled={position.end} aria-label="Next product screen">→</button></div></div>
     <div className="product-screens-track" ref={trackRef} onScroll={syncPosition}>
       <ProductScreenFrame step="1" category="Practice activity" title="See where judgment is improving"><ActivityDashboard /></ProductScreenFrame>
       <ProductScreenFrame step="2" category="Decision signals" title="Understand what needs attention"><JudgmentDonut /></ProductScreenFrame>
       <ProductScreenFrame step="3" category="Readiness score" title="Turn evidence into a clear score"><ReadinessScore /></ProductScreenFrame>
+      <ProductScreenFrame step="4" category="Case decision" title="Make the call inside a real artifact"><CaseDecision /></ProductScreenFrame>
+      <ProductScreenFrame step="5" category="Targeted practice" title="Practice the exact gap that surfaced"><TargetedPractice /></ProductScreenFrame>
     </div>
   </section>
 }
