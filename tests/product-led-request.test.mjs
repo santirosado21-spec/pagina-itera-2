@@ -51,6 +51,10 @@ test('Kinetic Field mobile layout keeps controls off content and compacts the da
   assert.match(styles, /\.option-four \.dashboard-metrics strong\{font-size:clamp\(26px,8vw,34px\)/);
   assert.match(styles, /\.option-four \.team-list>div\{grid-template-columns:26px minmax\(0,1fr\) 38px/);
   assert.match(styles, /\.option-four \.client-card-names-only \.client-sector\{[^}]*font-size:12px/);
+  assert.match(styles, /\.option-four \.workbench-card\{padding:28px/);
+  assert.match(styles, /\.option-four \.product-format-card-kinetic>div\{transform:none!important;transition:none!important/);
+  assert.match(styles, /\.option-four \.product-format-card-kinetic \.product-format-icon-orbit\{[^}]*transform:none!important/);
+  assert.match(styles, /\.option-four \.product-format-card-kinetic \.product-format-icon-circle\{[^}]*transform:translate3d\(-50%,-50%,0\)!important;transition:none!important/);
 });
 
 test('Kinetic Field calculator uses the requested tiers without the blue Pricing calculator label', () => {
