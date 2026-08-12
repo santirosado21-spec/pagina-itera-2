@@ -32,7 +32,7 @@ export function ProductLedPage({ kinetic = false }) { return <PageShell classNam
   <section id="how" className="how lab-flow section"><div className="container"><Reveal><p className="eyebrow">Nine-stage process</p><h2>From company context to measurable adoption.</h2><p className="lead">Follow the evidence from the work your people do to the readiness your managers can defend.</p></Reveal><HowItWorks features={processFeatures} className="mt-16 md:mt-20" /></div></section>
   <section id="managers" className="manager lab-manager dark overflow-hidden"><ContainerScroll titleComponent={<div className="px-5"><p className="eyebrow !text-[#8fb4ff]">For managers</p><h2 className="mx-auto !text-white">The dashboard that tells you who's ready for AI and who isn't.</h2><p className="lead mx-auto !text-[#b8c6dc]">See who decides well, where the team needs support, and assign the right practice with one click.</p><a className="text-link light-link mt-3" href={links.demo}>See the dashboard in a demo →</a></div>}><Dashboard className="h-full" /></ContainerScroll></section>
   <section className="measurement section"><div className="container"><div className="measurement-heading"><p className="eyebrow">Product format</p><h2>Small sessions. Defensible evidence.</h2><p className="lead">Four parts of one continuous system, centered on the decisions your team makes with AI.</p></div><ProductFormat cards={productFormatCards} /><p className="citation measurement-citation">Organizations with high shadow-AI use averaged $670K more in breach costs — IBM, Cost of a Data Breach Report 2025.</p></div></section>
-  <BuiltWithItera />
+  {!kinetic && <BuiltWithItera />}
   <PricingCalculator />
   <Testimonials />
   <AboutUs />

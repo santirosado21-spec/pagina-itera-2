@@ -9,8 +9,13 @@ const site = read('src/components/Site.jsx');
 const clients = read('src/components/ui/testimonial.tsx');
 const styles = read('src/styles/global.css');
 
+test('Kinetic Field omits the unrequested Living Stack section', () => {
+  assert.match(optionOne, /\{!kinetic\s*&&\s*<BuiltWithItera\s*\/>\}/);
+  assert.doesNotMatch(optionFour, /BuiltWithItera/);
+  assert.match(optionFour, /<ProductLedPage kinetic\s*\/>/);
+});
+
 test('Option 1 and Kinetic Field share the requested finished content', () => {
-  assert.match(optionOne, /<BuiltWithItera\s*\/>/);
   assert.match(optionOne, /<ProductScreens\s*\/>/);
   assert.match(optionOne, /<Testimonials\s*\/>/);
   assert.match(optionFour, /<ProductLedPage kinetic\s*\/>/);
