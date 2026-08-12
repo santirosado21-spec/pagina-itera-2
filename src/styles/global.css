@@ -167,3 +167,69 @@
 .option-one .pricing-copy>.eyebrow{color:#8fb4ff}
 @media(max-width:767px){.option-one .product-screen{flex-basis:100%;height:644px}.option-one .product-screen-body{height:610px}.option-one .product-screen-viewport{height:480px}}
 @media(prefers-reduced-motion:reduce){.built-with-itera__orbit,.built-with-itera__provider{animation:none!important;transition:none!important}}
+
+/* Kinetic Field refinement — intentionally isolated from Option 1. */
+.option-four .manager-scroll-copy-kinetic{max-width:780px;margin-inline:auto;padding-block:clamp(48px,7vw,80px);padding-inline:clamp(20px,4vw,48px)}
+.option-four .manager-scroll-copy-kinetic h2{max-width:720px;font-size:clamp(28px,3vw,40px);line-height:1.14}
+.option-four .manager-scroll-copy-kinetic .lead{max-width:600px;font-size:clamp(15px,1.15vw,18px);line-height:1.58}
+.option-four .pricing-copy>.eyebrow{color:#fff}
+.option-four .product-format-hub{min-height:260px}
+.option-four .product-format-logo{width:188px;height:188px;box-shadow:0 34px 76px -42px rgba(0,58,255,.7),inset 0 1px 0 #fff}
+
+.option-four .price-slider-wrap{margin:38px 0 30px}
+.option-four .price-slider-wrap input[type="range"]{display:block;width:100%;height:34px;margin:0;cursor:grab;appearance:none;-webkit-appearance:none;background:transparent}
+.option-four .price-slider-wrap input[type="range"]:active{cursor:grabbing}
+.option-four .price-slider-wrap input[type="range"]::-webkit-slider-runnable-track{height:8px;border-radius:999px;background:linear-gradient(90deg,#86a9ff 0 var(--slider-progress),rgba(255,255,255,.28) var(--slider-progress) 100%)}
+.option-four .price-slider-wrap input[type="range"]::-moz-range-track{height:8px;border-radius:999px;background:linear-gradient(90deg,#86a9ff 0 var(--slider-progress),rgba(255,255,255,.28) var(--slider-progress) 100%)}
+.option-four .price-slider-wrap input[type="range"]::-webkit-slider-thumb{width:26px;height:26px;margin-top:-9px;border:4px solid #071426;border-radius:50%;appearance:none;-webkit-appearance:none;background:#fff;box-shadow:0 0 0 2px #86a9ff,0 8px 20px rgba(0,0,0,.36)}
+.option-four .price-slider-wrap input[type="range"]::-moz-range-thumb{width:20px;height:20px;border:4px solid #071426;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #86a9ff,0 8px 20px rgba(0,0,0,.36)}
+.option-four .price-slider-wrap input[type="range"]:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.option-four .price-slider-limits{display:flex;justify-content:space-between;margin-top:8px;color:#c9d5e7;font-size:12px;font-weight:600}
+.option-four .price-result>span{color:#fff;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.option-four .price-result>strong{color:#fff}.option-four .price-result>strong small,.option-four .price-result p{color:#d7e1ef}
+.option-four .pricing-tier-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:26px}
+.option-four .pricing-tier-list>div{display:grid;gap:4px;padding:14px 12px;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:rgba(2,10,23,.35);color:#fff}
+.option-four .pricing-tier-list>div.is-active{border-color:#a8c2ff;background:#fff;color:#071426;box-shadow:0 12px 30px -20px rgba(125,165,255,.85)}
+.option-four .pricing-tier-list strong{font-size:12px}.option-four .pricing-tier-list span{font-size:20px;font-weight:650}.option-four .pricing-tier-list small{font-size:10px;color:inherit;opacity:.78}
+
+.option-four .client-card-names-only{transform:none!important}
+.option-four .client-card-body{padding:8px}
+.option-four .client-card-names-only .client-logo-frame{display:grid;place-items:center;height:220px;padding:40px;background:rgba(238,243,255,.82)}
+.option-four .client-card-names-only .client-logo-frame img{width:100%;height:auto;max-height:86px;object-fit:contain;transform:none!important}
+.option-four .client-card-names-only .client-card-heading{padding:20px 16px}.option-four .client-card-names-only .client-card-heading strong{font-size:20px}
+.option-four .founder-photo{background:#0865c7}
+.option-four .founder-card-pablo .founder-photo img{transform:scale(1.025)}
+.background-proposal-switcher{position:fixed;z-index:220;right:18px;bottom:18px;display:flex;align-items:center;gap:6px;padding:7px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:rgba(248,250,255,.82);box-shadow:0 16px 40px -24px rgba(7,20,38,.65);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.background-proposal-switcher span{padding:0 8px;color:#59667a;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.background-proposal-switcher a{padding:9px 12px;border-radius:999px;color:#253047;font-size:11px;font-weight:650}.background-proposal-switcher a[aria-current="page"]{background:#071426;color:#fff}.background-proposal-switcher a:focus-visible{outline:2px solid #003aff;outline-offset:2px}
+
+/* Background proposal A — Signal Wash: quiet white surfaces with broad blue light. */
+.option-four-bg-signal main{background:#f8faff}
+.option-four-bg-signal :where(.lab-product,.problem,.lab-flow,.measurement,.about-section){background-color:transparent}
+.option-four-bg-signal .lab-product{background-image:radial-gradient(ellipse at 88% 6%,rgba(94,139,255,.18),transparent 38%)}
+.option-four-bg-signal .problem{background-image:radial-gradient(ellipse at 10% 90%,rgba(118,169,255,.2),transparent 42%)}
+.option-four-bg-signal .measurement{background-image:linear-gradient(180deg,rgba(255,255,255,.2),rgba(226,237,255,.65),rgba(255,255,255,.3))}
+
+/* Background proposal B — Blueprint: technical ice-blue grid with restrained depth. */
+.option-four-bg-blueprint main{background-color:#eef5ff;background-image:linear-gradient(rgba(0,58,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,58,255,.045) 1px,transparent 1px);background-size:48px 48px}
+.option-four-bg-blueprint :where(.lab-product,.problem,.lab-flow,.measurement,.about-section){background-color:rgba(247,250,255,.76)}
+.option-four-bg-blueprint .problem,.option-four-bg-blueprint .measurement{background-color:rgba(229,239,255,.78)}
+.option-four-bg-blueprint .built-with-itera{background-color:rgba(222,235,255,.88)}
+
+/* Background proposal C — Midnight Flow: alternating dark narrative fields. */
+.option-four-bg-midnight main{background:#071426}
+.option-four-bg-midnight :where(.lab-product,.lab-flow,.measurement,.about-section){background:#f8faff}
+.option-four-bg-midnight :where(.problem,.built-with-itera){background-color:#0b1b31;color:#fff}
+.option-four-bg-midnight .problem{background-image:radial-gradient(circle at 15% 25%,rgba(0,58,255,.42),transparent 38%)}
+.option-four-bg-midnight .built-with-itera{background-image:radial-gradient(circle at 80% 30%,rgba(49,95,255,.34),transparent 42%)}
+.option-four-bg-midnight :where(.problem,.built-with-itera) h2{color:#fff}
+.option-four-bg-midnight :where(.problem,.built-with-itera) p{color:#c4d0e2}
+.option-four-bg-midnight :where(.problem,.built-with-itera) .eyebrow{color:#9fbbff}
+.option-four-bg-midnight .problem .evidence-item{border-color:rgba(255,255,255,.18)}
+.option-four-bg-midnight .problem .evidence-item cite{color:#aebdd1}
+
+@media(max-width:767px){
+  .option-four .manager-scroll-copy-kinetic{padding-block:48px;padding-inline:10px}.option-four .manager-scroll-copy-kinetic h2{font-size:clamp(28px,8.5vw,34px)}
+  .option-four .pricing-tier-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .option-four .client-card-names-only .client-logo-frame{height:190px;padding:32px}
+  .background-proposal-switcher{right:10px;bottom:10px;left:10px;justify-content:center;overflow-x:auto}.background-proposal-switcher span{display:none}.background-proposal-switcher a{white-space:nowrap;padding-inline:10px}
+}

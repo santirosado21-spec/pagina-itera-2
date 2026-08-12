@@ -18,7 +18,7 @@ function IntegrationCard({ integration, featured = false }: { integration: typeo
   );
 }
 
-export default function BuiltWithItera() {
+export default function BuiltWithItera({ staticCore = false }: { staticCore?: boolean }) {
   const left = integrations.slice(0, 2);
   const center = integrations[2];
   const right = integrations.slice(3);
@@ -35,8 +35,7 @@ export default function BuiltWithItera() {
           <div className="built-with-itera__side">{left.map(integration => <IntegrationCard key={integration.name} integration={integration} />)}</div>
           <div className="built-with-itera__center">
             <div className="built-with-itera__core liquid-glass-panel" aria-label="Itera, one continuous practice layer">
-              <span className="built-with-itera__orbit" aria-hidden="true" />
-              <span className="built-with-itera__orbit orbit-two" aria-hidden="true" />
+              {!staticCore && <><span className="built-with-itera__orbit" aria-hidden="true" /><span className="built-with-itera__orbit orbit-two" aria-hidden="true" /></>}
               <img src="/a0ba166a-1b60-4d4e-bf9f-8b669276e87c.png" alt="Itera" width="1371" height="659" />
               <strong>One continuous layer</strong>
               <span>Practice · decide · measure</span>

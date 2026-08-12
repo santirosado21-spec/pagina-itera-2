@@ -125,7 +125,7 @@ if (!/<BackgroundPaths[\s\S]*title=/.test(optionOne)) failures.push('Product-led
 if (backgroundPaths && !/href=\{primaryHref\}/.test(backgroundPaths)) failures.push('BackgroundPaths CTA does not use a real link destination')
 if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer,\.aether-ribbon-path\{animation:none!important;transform:none!important\}/.test(css)) failures.push('BackgroundPaths lacks a reduced-motion fallback')
 if (!/import Testimonials from ['"]@\/components\/ui\/testimonial['"]/.test(optionOne)) failures.push('Option 1 does not import the client testimonial section')
-if (!/<Testimonials\s*\/>/.test(optionOne)) failures.push('Product-led options do not mount the client testimonial section')
+if (!/<Testimonials\s+namesOnly=\{kinetic\}\s*\/>/.test(optionOne)) failures.push('Product-led options do not mount the isolated organization section')
 for (const client of ['Ponte Advisory', 'Aurea Legal', 'Serena Health']) if (!testimonial.includes(client)) failures.push(`missing approved client ${client}`)
 for (const logo of ['ponte-advisory.webp', 'aurea-legal.webp', 'serena-health.webp']) if (!testimonial.includes(logo)) failures.push(`missing supplied client logo ${logo}`)
 if (testimonial && !/type="button"/.test(testimonial)) failures.push('client cards are not keyboard-accessible clickable controls')
@@ -164,11 +164,11 @@ if (/className="measurement section"[\s\S]{0,700}<Proof\s*\/>/.test(optionOne)) 
 for (const phrase of ['15 min', '6 dimensions', '6 min', 'Continuous']) if (!optionOne.includes(phrase)) failures.push(`Product format card missing ${phrase}`)
 if (optionOne.includes("metric: '~6 min'")) failures.push('Product format practice metric still includes a leading character before 6 min')
 for (const contract of [
-  ['Pricing calculator is missing', /<PricingCalculator\s*\/>/],
-  ['About Us section is missing', /<AboutUs\s*\/>/],
+  ['Pricing calculator is missing', /<PricingCalculator\s+tiered=\{kinetic\}\s*\/>/],
+  ['About Us section is missing', /<AboutUs\s+kinetic=\{kinetic\}\s*\/>/],
   ['Centered Product Format composition is missing', /<ProductFormat\s+cards=\{productFormatCards\}/],
 ]) if (!contract[1].test(optionOne)) failures.push(contract[0])
-for (const marker of ['price-slider', '149', 'Volume pricing', 'pablo.webp', 'Santiago Rosado', 'linkedin.com/in/pblcrmn']) requireText(`missing requested product-led content: ${marker}`, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'))
+for (const marker of ['price-slider', '149', 'Volume pricing', 'pablo-blue.webp', 'Santiago Rosado', 'linkedin.com/in/pblcrmn']) requireText(`missing requested product-led content: ${marker}`, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'))
 if (!/linear-gradient\(135deg/.test(howItWorks)) failures.push('HowItWorks lacks the requested diagonal comment-card motion direction')
 if (glassCard && !/rounded-\[24px\]/.test(glassCard)) failures.push('GlassCard does not use the restrained Itera card radius')
 if (glassCard && (/rounded-\[50px\]/.test(glassCard) || /30deg/.test(glassCard))) failures.push('GlassCard retains the over-designed reference geometry')
