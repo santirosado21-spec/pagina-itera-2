@@ -65,20 +65,10 @@ for (const [label, page, component, hook] of [
 }
 for (const hook of ['scan-line','trend-line','signal-path','IntersectionObserver']) if (!source.includes(hook)) failures.push(`missing required motion hook ${hook}`)
 if (!/@media\(prefers-reduced-motion:reduce\)/.test(css)) failures.push('reduced-motion fallback missing')
-for (const variant of ['option-one','option-two','option-three']) {
-  if (!new RegExp(`\\.${variant} \\.ambient-background`).test(css)) failures.push(`missing ambient variant ${variant}`)
-}
-if (!/export function AmbientBackground/.test(site) || !/<AmbientBackground\s*\/>/.test(site)) failures.push('shared ambient background is not mounted by PageShell')
+if (/ambient-background|ambient-drift|ambient-orbit/.test(source)) failures.push('perpetual fixed ambient decoration must remain removed')
 if ((site.match(/new IntersectionObserver/g) || []).length !== 2) failures.push('expected one shared section observer plus the existing directed-graph observer')
 if (!/querySelectorAll\('main > section, footer'\)/.test(site) || !/observer\.unobserve\(entry\.target\)/.test(site)) failures.push('section motion does not centrally observe each major section once')
 if (/function Reveal[\s\S]{0,400}IntersectionObserver/.test(site)) failures.push('Reveal still creates per-element observers')
-for (const name of ['ambient-drift','ambient-orbit']) {
-  const start = css.indexOf(`@keyframes ${name}`)
-  const end = css.indexOf('@keyframes', start + 12)
-  const keyframe = start >= 0 ? css.slice(start, end < 0 ? css.length : end) : ''
-  if (!keyframe || /background-position|filter:|blur\(/.test(keyframe) || !/transform:/.test(keyframe)) failures.push(`${name} is missing or not compositor-safe`)
-}
-if (!/\.motion-paused \.ambient-background i\{animation-play-state:paused\}/.test(css)) failures.push('ambient motion does not pause while hidden')
 if (!/prefers-reduced-motion:reduce[\s\S]*\.motion-ready main>section[\s\S]*opacity:1!important;transform:none!important/.test(css)) failures.push('reduced-motion content fallback missing')
 if ((site.match(/Sample data/g) || []).length < 4) failures.push('control-room charts are not individually covered by Sample data labels')
 if (!/signal-mobile/.test(site + css)) failures.push('9-stage signal map lacks mobile timeline')
@@ -92,6 +82,9 @@ if (!/\.product-screens-track\{[^}]*scroll-snap-type:x mandatory/.test(css) || !
 for (const phrase of ['makes good calls with AI.', 'catches what AI gets wrong.', 'knows when to push back.', 'handles data responsibly.', 'is ready to work with AI.']) {
   if (!source.includes(phrase)) failures.push(`AnimatedHeroTitle missing ${phrase}`)
 }
+if (!/titleNumber === titles\.length - 1/.test(source) || /titleNumber === titles\.length - 1 \? 0/.test(source)) failures.push('AnimatedHeroTitle still loops forever offscreen')
+if (/animation:itera-horizon-drift/.test(css)) failures.push('Product-led hero gradient still animates forever')
+if (/animation:scan[^}]*infinite/.test(css) || /\.evidence-chip i\{[^}]*animation:pulse[^}]*infinite/.test(css)) failures.push('Product workbench still runs decorative motion forever')
 if (!/<AnimatedHeroTitle\s*\/>/.test(optionOne)) failures.push('AnimatedHeroTitle is not mounted in Option 1')
 if (!/animated-title-word:first-child\{display:block;opacity:1\}/.test(css)) failures.push('AnimatedHeroTitle lacks a deterministic reduced-motion state')
 
@@ -130,7 +123,7 @@ if (containerScroll && !/touch-pan-y/.test(containerScroll)) failures.push('Cont
 if (!/import \{ BackgroundPaths \} from ['"]@\/components\/ui\/background-paths['"]/.test(optionOne)) failures.push('Option 1 does not import the animated BackgroundPaths CTA')
 if (!/<BackgroundPaths[\s\S]*title=/.test(optionOne)) failures.push('Product-led options do not end with the BackgroundPaths CTA')
 if (backgroundPaths && !/href=\{primaryHref\}/.test(backgroundPaths)) failures.push('BackgroundPaths CTA does not use a real link destination')
-if (backgroundPaths && !/useReducedMotion/.test(backgroundPaths)) failures.push('BackgroundPaths lacks a reduced-motion fallback')
+if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer\{animation:none!important;transform:none!important\}/.test(css)) failures.push('BackgroundPaths lacks a reduced-motion fallback')
 if (!/import Testimonials from ['"]@\/components\/ui\/testimonial['"]/.test(optionOne)) failures.push('Option 1 does not import the client testimonial section')
 if (!/<Testimonials\s*\/>/.test(optionOne)) failures.push('Product-led options do not mount the client testimonial section')
 for (const client of ['Ponte Advisory', 'Aurea Legal', 'Serena Health']) if (!testimonial.includes(client)) failures.push(`missing approved client ${client}`)
@@ -145,10 +138,13 @@ if (backgroundPaths && !/bg-white/.test(backgroundPaths)) failures.push('final g
 if (backgroundPaths && !/import AetherRibbonMesh from ['"]@\/components\/ui\/aether-ribbon-mesh['"]/.test(backgroundPaths)) failures.push('final CTA does not import the Aether ribbon graphic')
 if (backgroundPaths && !/<AetherRibbonMesh/.test(backgroundPaths)) failures.push('final CTA does not mount the Aether ribbon graphic')
 if (backgroundPaths && /function EvidenceGraphic/.test(backgroundPaths)) failures.push('old footer evidence graphic remains mounted')
-if (aetherRibbon && !/ResizeObserver/.test(aetherRibbon)) failures.push('Aether ribbon does not size itself to the footer section')
-if (aetherRibbon && !/prefers-reduced-motion/.test(aetherRibbon)) failures.push('Aether ribbon lacks a reduced-motion fallback')
-if (aetherRibbon && !/FRAME_INTERVAL/.test(aetherRibbon)) failures.push('Aether ribbon lacks a bounded frame-rate budget')
-if (aetherRibbon && !/Math\.min\(window\.devicePixelRatio \|\| 1, 1\.25\)/.test(aetherRibbon)) failures.push('Aether ribbon canvas exceeds the lightweight DPR budget')
+if (backgroundPaths && /framer-motion|useReducedMotion|<motion\./.test(backgroundPaths)) failures.push('final CTA still loads redundant Framer Motion code')
+if (aetherRibbon && /<canvas|requestAnimationFrame|ResizeObserver|devicePixelRatio|pointermove|pointerdown|Particle/.test(aetherRibbon)) failures.push('Aether ribbon still performs continuous canvas or pointer work')
+if (aetherRibbon && !/<svg[\s\S]*ribbons\.map/.test(aetherRibbon)) failures.push('Aether ribbon is not rendered as a bounded SVG path set')
+if (aetherRibbon && !/IntersectionObserver/.test(aetherRibbon)) failures.push('Aether ribbon does not pause outside the footer viewport')
+if (!/\.aether-ribbon-mesh\[data-active\] \.aether-ribbon-layer\{animation-play-state:running\}/.test(css)) failures.push('Aether ribbon viewport gate is not connected to CSS animation state')
+if (!/\.motion-paused \.aether-ribbon-mesh\[data-active\] \.aether-ribbon-layer\{animation-play-state:paused\}/.test(css)) failures.push('Aether ribbon does not pause while the document is hidden')
+if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer\{animation:none!important;transform:none!important\}/.test(css)) failures.push('Aether ribbon lacks a reduced-motion fallback')
 const kineticGridPath = join(root, 'src/components/ui/kinetic-grid.jsx')
 let kineticGrid = ''
 try { kineticGrid = readFileSync(kineticGridPath, 'utf8') } catch { failures.push('missing src/components/ui/kinetic-grid.jsx') }

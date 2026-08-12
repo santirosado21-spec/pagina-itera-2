@@ -13,11 +13,11 @@ export function AnimatedHeroTitle() {
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reducedMotion) return undefined
+    if (reducedMotion || titleNumber === titles.length - 1) return undefined
 
     const timeoutId = window.setTimeout(() => {
       setPreviousNumber(titleNumber)
-      setTitleNumber(titleNumber === titles.length - 1 ? 0 : titleNumber + 1)
+      setTitleNumber(titleNumber + 1)
     }, 2400)
 
     return () => window.clearTimeout(timeoutId)

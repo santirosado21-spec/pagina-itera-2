@@ -110,10 +110,6 @@ export function FinalCTA({ enterprise = false, minimal = false }) { return <sect
 
 export function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Logo /><p>AI fluency for teams. Measure the judgment, close the gaps.</p></div><div><strong>Product</strong><a href="#how">How it works</a><a href={links.cases}>Cases</a><a href="#managers">For managers</a></div><div><strong>Company</strong><a href={links.email}>Contact sales</a><a href={links.demo}>Manager demo</a></div><div><strong>Legal</strong><a href={links.privacy}>Privacy</a><a href={links.terms}>Terms</a></div></div><div className="container copyright">© 2026 Itera. All rights reserved. AI fluency, measured.</div></footer> }
 
-export function AmbientBackground() {
-  return <div className="ambient-background" aria-hidden="true"><i /><i /><i /></div>
-}
-
 export function PageShell({ children, className = '' }) {
   const shellRef = useRef(null)
   useEffect(() => {
@@ -150,7 +146,7 @@ export function PageShell({ children, className = '' }) {
       document.removeEventListener('visibilitychange', syncVisibility)
     }
   }, [])
-  return <div ref={shellRef} className={className}><a className="skip-link" href="#main">Skip to content</a><AmbientBackground />{children}</div>
+  return <div ref={shellRef} className={className}><a className="skip-link" href="#main">Skip to content</a>{children}</div>
 }
 
 export function Reveal({ children, className = '', as: Tag = 'div' }) {
