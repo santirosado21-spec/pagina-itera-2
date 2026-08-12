@@ -175,6 +175,8 @@
 .option-four .manager-scroll-copy-kinetic h2{max-width:680px;font-size:clamp(26px,2.6vw,36px);line-height:1.14}
 .option-four .manager-scroll-copy-kinetic .lead{max-width:600px;font-size:clamp(15px,1.15vw,18px);line-height:1.58}
 .option-four .lab-manager .container-scroll-card{height:clamp(460px,44vw,520px);max-width:920px}
+.option-four .scan-line{animation:scan 3s ease-in-out infinite}
+@media(min-width:1001px){.option-four .lab-features{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
 .option-four .pricing-copy>.eyebrow{color:#fff}
 .option-four .product-format-hub{min-height:260px}
 .option-four .product-format-logo{width:188px;height:188px;box-shadow:0 34px 76px -42px rgba(0,58,255,.7),inset 0 1px 0 #fff}
