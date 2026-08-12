@@ -123,7 +123,7 @@ if (containerScroll && !/touch-pan-y/.test(containerScroll)) failures.push('Cont
 if (!/import \{ BackgroundPaths \} from ['"]@\/components\/ui\/background-paths['"]/.test(optionOne)) failures.push('Option 1 does not import the animated BackgroundPaths CTA')
 if (!/<BackgroundPaths[\s\S]*title=/.test(optionOne)) failures.push('Product-led options do not end with the BackgroundPaths CTA')
 if (backgroundPaths && !/href=\{primaryHref\}/.test(backgroundPaths)) failures.push('BackgroundPaths CTA does not use a real link destination')
-if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer\{animation:none!important;transform:none!important\}/.test(css)) failures.push('BackgroundPaths lacks a reduced-motion fallback')
+if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer,\.aether-ribbon-path\{animation:none!important;transform:none!important\}/.test(css)) failures.push('BackgroundPaths lacks a reduced-motion fallback')
 if (!/import Testimonials from ['"]@\/components\/ui\/testimonial['"]/.test(optionOne)) failures.push('Option 1 does not import the client testimonial section')
 if (!/<Testimonials\s*\/>/.test(optionOne)) failures.push('Product-led options do not mount the client testimonial section')
 for (const client of ['Ponte Advisory', 'Aurea Legal', 'Serena Health']) if (!testimonial.includes(client)) failures.push(`missing approved client ${client}`)
@@ -142,9 +142,11 @@ if (backgroundPaths && /framer-motion|useReducedMotion|<motion\./.test(backgroun
 if (aetherRibbon && /<canvas|requestAnimationFrame|ResizeObserver|devicePixelRatio|pointermove|pointerdown|Particle/.test(aetherRibbon)) failures.push('Aether ribbon still performs continuous canvas or pointer work')
 if (aetherRibbon && !/<svg[\s\S]*ribbons\.map/.test(aetherRibbon)) failures.push('Aether ribbon is not rendered as a bounded SVG path set')
 if (aetherRibbon && !/IntersectionObserver/.test(aetherRibbon)) failures.push('Aether ribbon does not pause outside the footer viewport')
-if (!/\.aether-ribbon-mesh\[data-active\] \.aether-ribbon-layer\{animation-play-state:running\}/.test(css)) failures.push('Aether ribbon viewport gate is not connected to CSS animation state')
-if (!/\.motion-paused \.aether-ribbon-mesh\[data-active\] \.aether-ribbon-layer\{animation-play-state:paused\}/.test(css)) failures.push('Aether ribbon does not pause while the document is hidden')
-if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer\{animation:none!important;transform:none!important\}/.test(css)) failures.push('Aether ribbon lacks a reduced-motion fallback')
+if (!/\.aether-ribbon-mesh\[data-active\] \.aether-ribbon-layer,\.aether-ribbon-mesh\[data-active\] \.aether-ribbon-path\{animation-play-state:running\}/.test(css)) failures.push('Aether ribbon viewport gate is not connected to CSS animation state')
+if (!/\.motion-paused \.aether-ribbon-mesh\[data-active\] \.aether-ribbon-layer,\.motion-paused \.aether-ribbon-mesh\[data-active\] \.aether-ribbon-path\{animation-play-state:paused\}/.test(css)) failures.push('Aether ribbon does not pause while the document is hidden')
+if (!/prefers-reduced-motion:reduce[\s\S]*\.aether-ribbon-layer,\.aether-ribbon-path\{animation:none!important;transform:none!important\}/.test(css)) failures.push('Aether ribbon lacks a reduced-motion fallback')
+if (!/className="aether-ribbon-path"/.test(aetherRibbon) || !/--ribbon-duration/.test(aetherRibbon)) failures.push('Aether ribbons do not move independently at visible speeds')
+if (!/\.aether-ribbon-path\{[^}]*animation:aether-ribbon-flow/.test(css) || !/@keyframes aether-ribbon-flow/.test(css)) failures.push('Aether ribbon lacks perceptible per-path motion')
 const kineticGridPath = join(root, 'src/components/ui/kinetic-grid.jsx')
 let kineticGrid = ''
 try { kineticGrid = readFileSync(kineticGridPath, 'utf8') } catch { failures.push('missing src/components/ui/kinetic-grid.jsx') }

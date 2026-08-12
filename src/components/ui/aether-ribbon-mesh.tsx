@@ -43,10 +43,19 @@ export default function AetherRibbonMesh({ className = '' }: AetherRibbonMeshPro
         <g className="aether-ribbon-layer">
           {ribbons.map((path, index) => (
             <path
+              className="aether-ribbon-path"
               key={path}
               d={path}
               pathLength="1"
-              style={{ '--ribbon-width': `${1 + index * 0.12}px`, '--ribbon-opacity': 0.88 - index * 0.1 } as CSSProperties}
+              style={{
+                '--ribbon-width': `${1 + index * 0.12}px`,
+                '--ribbon-opacity': 0.88 - index * 0.1,
+                '--ribbon-duration': `${5.2 + index * 0.55}s`,
+                '--ribbon-mobile-duration': `${((5.2 + index * 0.55) * 1.12).toFixed(2)}s`,
+                '--ribbon-delay': `${index * -0.8}s`,
+                '--ribbon-start-shift': `${(index % 2 === 0 ? 18 + index * 2 : -18 - index * 2) * -0.45}px`,
+                '--ribbon-shift': `${index % 2 === 0 ? 18 + index * 2 : -18 - index * 2}px`,
+              } as CSSProperties}
             />
           ))}
         </g>
