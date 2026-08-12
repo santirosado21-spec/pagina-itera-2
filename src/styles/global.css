@@ -237,9 +237,15 @@
 .option-four-bg-midnight .problem .evidence-item cite{color:#aebdd1}
 
 @media(max-width:767px){
-  .option-four .lab-manager>div{height:820px;padding-bottom:96px}.option-four .manager-scroll-copy-kinetic{padding-block:36px;padding-inline:10px}.option-four .manager-scroll-copy-kinetic h2{font-size:clamp(26px,8vw,32px)}
-  .option-four .pricing-tier-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .option-four .client-card-names-only .client-logo-frame{height:190px;padding:32px}
-  .option-four .client-card-names-only .client-impact{min-height:0}
-  .background-proposal-switcher{right:10px;bottom:10px;left:10px;justify-content:center;overflow-x:auto}.background-proposal-switcher span{display:none}.background-proposal-switcher a{white-space:nowrap;padding-inline:10px}
+  .background-proposal-switcher{display:none}
+  .option-four .lab-hero{padding-top:84px;padding-bottom:72px}.option-four .lab-hero-grid{gap:36px}.option-four .lab-hero .cta-row{margin-top:28px}.option-four .lab-hero .text-link{min-height:44px}
+  .option-four .lab-manager>div{height:820px;padding-bottom:72px}.option-four .manager-scroll-copy-kinetic{padding-block:28px;padding-inline:0}.option-four .manager-scroll-copy-kinetic h2{font-size:clamp(26px,8vw,32px)}
+  .option-four .lab-manager .container-scroll-card{height:430px}
+  .option-four .dashboard{padding:20px}.option-four .dashboard>header{align-items:flex-start;padding-bottom:16px}.option-four .dashboard>header span,.option-four .dashboard>header small{font-size:11px}
+  .option-four .dashboard-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:22px 0}.option-four .dashboard-metrics strong{font-size:clamp(26px,8vw,34px)}.option-four .dashboard-metrics span{font-size:11px}.option-four .readiness-value{gap:3px}
+  .option-four .team-list>strong{margin-bottom:12px;font-size:13px}.option-four .team-list>div{grid-template-columns:26px minmax(0,1fr) 38px;gap:8px;margin:10px 0;font-size:11px}
+  .option-four .pricing-tier-list{grid-template-columns:repeat(2,minmax(0,1fr))}.option-four .price-slider-wrap{margin:28px 0 24px}.option-four .price-slider-wrap input[type="range"]{height:44px}.option-four .pricing-tier-list>div{min-height:92px;padding:14px}
+  .option-four .client-card-names-only .client-logo-frame{height:190px;padding:32px}.option-four .client-card-names-only .client-sector{font-size:12px}.option-four .client-card-names-only .client-impact{min-height:0;font-size:16px}
+  .option-four .founder-copy p{font-size:16px}.option-four .founder-copy a{min-height:44px}
 }
+@media(max-width:430px){.option-four .lab-manager>div{height:780px}.option-four .lab-manager .container-scroll-card{height:420px}.option-four .price-calculator{padding:20px}.option-four .founder-photo{height:280px;min-height:280px}}

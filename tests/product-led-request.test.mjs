@@ -44,6 +44,15 @@ test('Kinetic Field client cards explain each sector and how Itera helped', () =
   assert.match(clients, /serena-clean\.webp/);
 });
 
+test('Kinetic Field mobile layout keeps controls off content and compacts the dashboard', () => {
+  assert.match(styles, /@media\(max-width:767px\)\{[^}]*\.background-proposal-switcher\{display:none/);
+  assert.match(styles, /\.option-four \.dashboard\{padding:20px/);
+  assert.match(styles, /\.option-four \.dashboard-metrics\{grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+  assert.match(styles, /\.option-four \.dashboard-metrics strong\{font-size:clamp\(26px,8vw,34px\)/);
+  assert.match(styles, /\.option-four \.team-list>div\{grid-template-columns:26px minmax\(0,1fr\) 38px/);
+  assert.match(styles, /\.option-four \.client-card-names-only \.client-sector\{[^}]*font-size:12px/);
+});
+
 test('Kinetic Field calculator uses the requested tiers without the blue Pricing calculator label', () => {
   const sections = read('src/components/ui/product-led-sections.tsx');
   assert.match(sections, /\{!tiered\s*&&\s*<p className="eyebrow">Pricing calculator<\/p>\}/);
