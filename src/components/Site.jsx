@@ -42,7 +42,7 @@ export function Simulation({ evaluation = false }) {
     <small>Illustrative interface only. No result is shown.</small>
   </div>
   return <div className="simulation" role="img" aria-label="Sample Itera practice interface for the Catch the hallucination case">
-    <header><span>itera · practice</span><span>CASE 3 · IN PROGRESS</span></header>
+    <header><span className="itera-practice-label">Itera Practice</span><span>Case 3 · In progress</span></header>
     <div className="sim-progress"><span>What the model gets to see</span><strong>4/9</strong></div>
     <div className="sim-copy"><small>The email your manager asked for</small><h3>Catch the hallucination</h3></div>
     <footer><span>12-day streak</span><strong>30/40</strong></footer>
@@ -162,7 +162,7 @@ const workbenchStates = [
 export function ProductWorkbench() {
   const [active, setActive] = useState(0)
   return <div className="product-workbench" aria-label="Interactive sample role simulation workbench">
-    <div className="workbench-top"><span>itera · practice</span><span>CASE 3 · IN PROGRESS</span></div>
+    <div className="workbench-top"><span className="itera-practice-label">Itera Practice</span><span>Case 3 · In progress</span></div>
     <div className="workbench-tabs" role="tablist" aria-label="Simulation workflow">
       {workbenchStates.map(([label], i) => <button key={label} role="tab" aria-selected={active === i} onClick={() => setActive(i)}><i>{i + 1}</i>{label}</button>)}
     </div>
