@@ -57,6 +57,8 @@ test('Kinetic Field mobile layout keeps controls off content and compacts the da
   assert.match(styles, /\.option-four \.product-format-card-kinetic \.product-format-icon-circle\{[^}]*transform:none!important;transition:none!important/);
   assert.match(styles, /\.option-four \.product-format-card-kinetic \.product-format-icon-ring-outer,[\s\S]*?\.product-format-icon-ring-inner\{display:none\}/);
   assert.match(styles, /\.option-four \.product-format-column:last-child \.product-format-card-kinetic \.product-format-icon-orbit\{right:auto;left:24px\}/);
+  assert.match(styles, /\.option-four \.product-format-card-kinetic \.product-format-eyebrow\{[^}]*font-family:inherit;[^}]*letter-spacing:0;text-transform:none\}/);
+  assert.match(styles, /\.option-four \.product-format-column:last-child \.product-format-card-kinetic \.product-format-eyebrow\{[^}]*align-self:flex-end;[^}]*text-align:right\}/);
   assert.match(styles, /\.option-four \.scan-line\{animation:scan 3s ease-in-out infinite/);
   assert.match(styles, /@media\(min-width:1001px\)\{\.option-four \.lab-features\{grid-template-columns:repeat\(3,minmax\(0,1fr\)\);gap:16px\}\}/);
 });

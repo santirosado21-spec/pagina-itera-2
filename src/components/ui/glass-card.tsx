@@ -26,7 +26,7 @@ const GlassCard = React.forwardRef<HTMLElement, GlassCardProps>(
         </div>
 
         <div className="relative z-10 flex h-full flex-col [transform:translate3d(0,0,18px)] motion-reduce:transform-none">
-          <span className="mb-12 block text-[12px] font-semibold uppercase tracking-[0.08em] text-[#003aff]">{eyebrow}</span>
+          <span className="product-format-eyebrow mb-12 block text-[12px] font-semibold uppercase tracking-[0.08em] text-[#003aff]">{eyebrow}</span>
           <strong className="block text-[clamp(36px,4vw,52px)] font-semibold leading-none tracking-[-0.04em] text-[#171d33]">{metric}</strong>
           <h3 className="mb-3 mt-5 text-[24px] font-semibold leading-[1.16] tracking-[-0.025em] text-[#171d33]">{title}</h3>
           <p className="mb-0 mt-auto max-w-[34ch] text-[16px] leading-[1.55] text-[#606676]">{description}</p>

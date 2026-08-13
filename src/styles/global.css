@@ -186,6 +186,8 @@
 .option-four .product-format-card-kinetic .product-format-icon-ring-inner{display:none}
 .option-four .product-format-card-kinetic .product-format-icon-circle{position:absolute;inset:0;display:grid;width:48px;height:48px;place-items:center;transform:none!important;transition:none}
 .option-four .product-format-card-kinetic .product-format-icon{margin:auto}
+.option-four .product-format-card-kinetic .product-format-eyebrow{font-family:inherit;font-size:14px;font-weight:600;line-height:1.25;letter-spacing:0;text-transform:none}
+.option-four .product-format-column:last-child .product-format-card-kinetic .product-format-eyebrow{align-self:flex-end;max-width:calc(100% - 64px);text-align:right}
 
 .option-four .price-slider-wrap{margin:38px 0 30px}
 .option-four .price-slider-wrap input[type="range"]{display:block;width:100%;height:34px;margin:0;cursor:grab;appearance:none;-webkit-appearance:none;background:transparent}
