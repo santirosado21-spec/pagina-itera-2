@@ -162,7 +162,7 @@ const workbenchStates = [
 export function ProductWorkbench() {
   const [active, setActive] = useState(0)
   return <div className="product-workbench" aria-label="Interactive sample role simulation workbench">
-    <div className="workbench-top"><span className="itera-practice-label">Itera Practice</span><span>Case 3 · In progress</span></div>
+    <div className="workbench-top workbench-top-status-only"><span>Case 3 · In progress</span></div>
     <div className="workbench-tabs" role="tablist" aria-label="Simulation workflow">
       {workbenchStates.map(([label], i) => <button key={label} role="tab" aria-selected={active === i} onClick={() => setActive(i)}><i>{i + 1}</i>{label}</button>)}
     </div>
